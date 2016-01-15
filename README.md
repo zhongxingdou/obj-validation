@@ -27,6 +27,9 @@ if(!validator.validate()){
     errors.forEach(function(msg){
         console.error(msg)
     })
+    // =>
+    // should at least 8 characters
+    // should less than or equal to 150
 }
 ```
 
