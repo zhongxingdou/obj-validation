@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>obj-validation demo</title>
+  <style>
+  .errors{
+    color: red;
+  }
+  </style>
+</head>
+<body>
+  <p class="errors" id="errors">
+  </p>
+  <form id="validateForm">
+    <p>
+      <label for="name">Name</label>
+      <input type="text" id="name">
+    </p>
+    <p>
+      <label for="name">Age</label>
+      <input type="text" id="age">
+    </p>
+    <p>
+      <button>Validate</button>
+    </p>
+  </form>
+  <script src="../dist/objValidation.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>
