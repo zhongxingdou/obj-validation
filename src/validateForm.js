@@ -187,4 +187,4 @@ proto.errorPlacement = function(error, element) {
     }
 }
 
-module.exports = ValidateForm
+export default ValidateForm

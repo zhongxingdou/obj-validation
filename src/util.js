@@ -6,6 +6,6 @@ function format(temp) {
     return temp
 }
 
-module.exports = {
+export default {
     format: format
 }

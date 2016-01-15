@@ -593,4 +593,4 @@ var proto = {
 
 Validator.prototype = proto
 
-module.exports = Validator
+export default Validator

@@ -1,4 +1,4 @@
-var util = require('./util')
+import util from './util'
 
 var utf8Length = function(str) {
     var s = str.length
@@ -20,7 +20,7 @@ function hasValue(value){
     return value !== undefined && value !== null && value !== ''
 }
 
-module.exports = {
+export default {
     depends: function(value, option, callback, props) {
         var dependsFilled = value.slice(1).every(function(v) {
             return hasValue(v)

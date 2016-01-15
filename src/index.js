@@ -1,11 +1,13 @@
-var validation = require('./validator')
-var validateForm  = require('./validateForm')
-var checkers      = require('./checkers')
+import validation   from './validator'
+import validateForm from './validateForm'
+import checkers     from './checkers'
 
 var objValidation          = validation
 objValidation.checkers     = checkers
 objValidation.validateForm = validateForm
 
-window.objValidation = objValidation
+if(typeof(window) !== 'undefined') {
+  window.objValidation = objValidation
+}
 
-module.exports = objValidation
+export default objValidation
