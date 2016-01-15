@@ -20,13 +20,14 @@ var obj = {
     age: 10000
 }
 
-var validator = new ObjValidation(rule, obj)
-validator.validate()
-var errors = validator.getErrors()
+var validator = new ObjValidation(rules, obj)
 
-errors.forEach(function(msg){
-    console.error(msg)
-})
+if(!validator.validate()){
+    var errors = validator.getErrors()
+    errors.forEach(function(msg){
+        console.error(msg)
+    })
+}
 ```
 
 
