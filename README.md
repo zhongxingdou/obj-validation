@@ -16,7 +16,7 @@ var rules = {
 }
 
 var obj = {
-    name: 'hal.zhong'
+    name: 'hal.zhong',
     age: 10000
 }
 
@@ -32,7 +32,7 @@ errors.forEach(function(msg){
 
 ## Development
 ### install global tools
-`npm install webpack mocha -g`
+`npm install rollup mocha -g`
 
 ### install npm for development
 `npm install`

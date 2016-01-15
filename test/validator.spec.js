@@ -1,4 +1,4 @@
-var Validator = require("../src/validator");
+var Validator = require("../dist/objValidation");
 var should = require('should');
 var sinon = require('sinon');
 
