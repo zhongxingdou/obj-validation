@@ -939,7 +939,10 @@
           validateOnSubmit: false,
           popupMessage: false,
           checkFully: true,
-          excludes: ''
+          excludes: '',
+          i18n: function (msg) {
+              return msg;
+          }
       };
 
       for (var p in defaults) {
@@ -949,6 +952,8 @@
       }
 
       var self = this;
+
+      var i18n = option.i18n;
 
       this.errorElementCls = 'validator-error';
       this.form = form;
