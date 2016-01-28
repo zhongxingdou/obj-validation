@@ -20,7 +20,8 @@ proto.initialize = function(form, validator, option) {
         popupMessage: false,
         checkFully: true,
         excludes: '',
-        i18n: function(msg) { return msg }
+        i18n: function(msg) { return msg },
+        alert: window.alert
     }
 
     for (var p in defaults) {
@@ -32,6 +33,7 @@ proto.initialize = function(form, validator, option) {
     var self = this
 
     var i18n = option.i18n
+    var myAlert = option.alert
 
     this.errorElementCls = 'validator-error'
     this.form = form
@@ -68,7 +70,7 @@ proto.initialize = function(form, validator, option) {
                 })
             }
 
-            if (alertMsges.length) bootbox.alert(alertMsges.join('<br>'))
+            if (alertMsges.length) myAlert(alertMsges.join('<br>'))
         }
     })
 
