@@ -333,7 +333,7 @@ var proto = {
         var self = this
         return function(result) {
             self._pendingCount--
-                //props： p1+p2, 向rule相关所有属性添加错误 
+                //props： p1+p2, 向rule相关所有属性添加错误
                 props.forEach(function(p) {
                     self._propPendingCount[p]--
 
