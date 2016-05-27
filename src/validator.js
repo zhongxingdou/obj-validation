@@ -18,12 +18,12 @@ function fire(self, eventType, param) {
     })
 }
 
-function Validator(rules, obj) {
+function Validator(rules, obj, propLabels) {
     this.validateErrors = {}
     this._pendingCount = 0
     this._propPendingCount = {}
 
-    if(obj)this.setValidateTarget(obj)
+    if(obj)this.setValidateTarget(obj, propLabels)
 
     this._validObservers = []
     this._inValidObservers = []
@@ -60,9 +60,12 @@ var proto = {
     },
 
     // 设置要验证的对象
-    setValidateTarget: function(obj) {
+    setValidateTarget: function(obj, propLabels) {
         this.reset()
-        if (obj) this._validateTarget = obj
+        if (obj) {
+            this._validateTarget = obj
+            this._propLabels = propLabels
+        }
     },
 
     getProp: function(prop) {
@@ -97,7 +100,7 @@ var proto = {
     addRule: function(prop, name, option) {
         var self = this
 
-        if (Array.prototype.isPrototypeOf(prop)) {
+        if (Array.isArray(prop)) {
             prop = prop.join(',')
         }
 
@@ -505,7 +508,16 @@ var proto = {
         }
 
         var context = self.getContext()
-        var result = checker.apply(context, [value, param, wrapCb, (props[1] ? props : props[0])])
+
+        var localeLabels = self._propLabels
+        var labels = props
+        if (localeLabels) {
+            labels = props.map(function(p){
+                return localeLabels[p] || p
+            })
+        }
+
+        var result = checker.apply(context, [value, param, wrapCb, labels])
         return result
     },
 
