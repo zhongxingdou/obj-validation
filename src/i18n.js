@@ -6,7 +6,7 @@ var currDict = {}
 var i18n = {
   setCurrLocale: function (locale) {
     currLocale = locale
-    currDict = localeDict[currLocale]
+    currDict = localeDict[currLocale] || {}
   },
   getLocaleString: function (key) {
     return currDict[key]
