@@ -15,15 +15,16 @@ var obj = {
 }
 
 var validator = new objValidation(rules, obj)
+objValidation.i18n.setCurrLocale('zh')
 
 function validate(){
   validator.validate()
   var errors = validator.getErrors()
 
-  var output = document.getElementById('errors') 
+  var output = document.getElementById('errors')
 
   output.innerHTML = '<ul>'
-    + errors.map(function(msg){return '<li>' + msg +  '</li>'})
+    + errors.map(function(msg){return '<li>' + msg +  '</li>'}).join('')
     + '</ul>'
 }
 
