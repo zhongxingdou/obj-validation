@@ -282,6 +282,13 @@ var proto = {
     this._resetObservers.push(observer)
   },
 
+  unReset: function(observer) {
+    var i = this._resetObservers.indexOf(observer)
+    if (i !== -1) {
+      this._resetObservers.splice(i)
+    }
+  },
+
   onValidatedAll: function(observer) {
     this._validatedObservers.push(observer)
   },
