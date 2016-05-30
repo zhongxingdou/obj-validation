@@ -21,4 +21,7 @@ objValidation.install = function (option) {
   objValidation.validateForm = validateForm(jQuery)
 }
 
+import vueValidate from './vueValidate'
+objValidation.vueBinder = vueValidate
+
 export default objValidation
