@@ -4,6 +4,6 @@ export default {
   entry: 'src/index.js',
   dest: 'dist/objValidation.js',
   format: 'umd',
-  moduleName: 'objValidation',
+  moduleName: 'ObjValidation',
   plugins: [ babel() ]
 }

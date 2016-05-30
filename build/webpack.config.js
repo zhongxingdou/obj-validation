@@ -1,6 +1,6 @@
 module.exports = {
   entry: {
-    objValidation: './src/index.js'
+    ObjValidation: './src/index.js'
   },
   output: {
     path: './dist',
