@@ -7,6 +7,12 @@
   .errors{
     color: red;
   }
+  .help-block{
+    color: red;
+  }
+  [v-cloak] {
+    display: none;
+  }
   </style>
 </head>
 <body>
@@ -25,7 +31,27 @@
       <button>Validate</button>
     </p>
   </form>
+
+  <div id="vueDemo">
+    <form id="validateForm" v-cloak>
+      <p>
+        <label for="name">Name</label>
+        <input type="text" v-model="user.name">
+        <span class="help-block">{{ validateError.name }}
+      </p>
+      <p>
+        <label for="name">Age</label>
+        <input type="text" v-model="user.age">
+        <span class="help-block">{{ validateError.age }}
+      </p>
+      <p>
+        <button>Submit</button>
+      </p>
+    </form>
+  </div>
+
   <script src="../dist/objValidation.js"></script>
+  <script src="http://vuejs.org/js/vue.js"></script>
   <script src="demo.js"></script>
 </body>
 </html>

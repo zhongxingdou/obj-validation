@@ -1,11 +1,13 @@
 var rules = {
     name: {
         type: String,
-        length:  8
+        length:  8,
+        pattern: /.*\..*/
     },
     age: {
         type: Number,
-        max: 150
+        max: 150,
+        min: 10
     }
 }
 
@@ -14,8 +16,9 @@ var obj = {
     age: 10000
 }
 
-var validator = new objValidation(rules, obj)
-objValidation.i18n.setCurrLocale('zh')
+var validator = new ObjValidation(rules, obj)
+Vue.use(ObjValidation.vueBinder)
+ObjValidation.i18n.setCurrLocale('zh')
 
 function validate(){
   validator.validate()
@@ -40,6 +43,22 @@ function init(){
     obj.age = document.getElementById('age').value
 
     validate()
+  })
+
+  new Vue({
+    el: '#vueDemo',
+    validate: {
+      validator: rules, // validator
+      target: 'user',
+      targetProps: ['age', 'name'],
+      label: {
+        name: '用户名',
+        age: '年龄'
+      }
+    },
+    data: {
+      user: obj
+    }
   })
 }
 
