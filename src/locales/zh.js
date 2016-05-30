@@ -26,6 +26,7 @@ export default {
   greaterThan: '请输入大于 {0} 的数值',
   lessThan: '请输入小于 {0} 的数值',
   extension: '请输入有效的后缀',
+  pattern: '格式无效',
   time: '请输入有效的时间',
   'compare:greaterThan': '{0} 须大于 {1}',
   'compare:greaterThanOrEqual': '{0} 须大于等于 {1}',
