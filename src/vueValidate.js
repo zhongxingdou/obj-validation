@@ -12,6 +12,8 @@ export default {
       created: function () {
         let vm = this
         let option = this.$options.validate
+        if (!option) return
+
         let target = option.target
         let vmTarget = vm.$get(target)
         let labels = option.labels
@@ -69,6 +71,7 @@ export default {
         validator.onReset(onReset)
       },
       beforeDestory: function () {
+        if (!this.validator) return
         this.validator.unReset(this._onValidatorReset)
         this.validator.setValidateTarget(null)
       }
