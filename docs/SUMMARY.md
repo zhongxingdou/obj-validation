@@ -2,4 +2,5 @@
 
 - [安装](installation.md)
 - [基本用法](basic.md)
+- [配合 Vue 使用](vue_mixin.md)
 
