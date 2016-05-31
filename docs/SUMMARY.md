@@ -1,4 +1,4 @@
 # Summary
 
-* SUMMARY.md
+- [安装](installation.md)
 
