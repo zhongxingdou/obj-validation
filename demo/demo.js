@@ -17,7 +17,6 @@ var obj = {
 }
 
 var validator = new ObjValidation(rules, obj)
-Vue.use(ObjValidation.vueBinder)
 ObjValidation.i18n.setCurrLocale('zh')
 
 function validate(){
@@ -47,10 +46,26 @@ function init(){
 
   new Vue({
     el: '#vueDemo',
+    mixins: [ObjValidation.vueMixin],
     validate: {
-      validator: rules, // validator
+      // 验证规则
+      rules: {
+          name: {
+              type: String,
+              length:  8,
+              pattern: /.*\..*/
+          },
+          age: {
+              type: Number,
+              max: 150,
+              min: 10
+          }
+      },
+      // 要验证的对象，可以通过 vm.$get('user') 获取
       target: 'user',
+      // 可选项，只验证指定成员
       targetProps: ['age', 'name'],
+      // 可选项，提供字段标签，方便展示给用户（字段名不容易理解）
       label: {
         name: '用户名',
         age: '年龄'
