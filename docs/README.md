@@ -1,1 +1,1 @@
-[](SUMMARY.md)
+SUMMARY.md
