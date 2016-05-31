@@ -1,5 +1,18 @@
+# 基本用法
+Obj-Validation 的使用通常分三个步骤：
+
+1. 声明验证规则
+2. 创建验证器实例
+3. 执行验证
+
+
 ```javascript
 import ObjValidation from 'obj-validation'
+
+let user = {
+  name: 'hal.zhong',
+  birthday: new Date('1883/10/17')
+}
 
 let rules = {
   name: {
@@ -15,11 +28,6 @@ let rules = {
       return (new Date()).getYear() - value.getYear() <= HUMAN_MAXINUM_AGE || msg
     }
   }
-}
-
-let user = {
-  name: 'hal.zhong',
-  birthday: new Date('1883/10/17')
 }
 
 let validator = new ObjValidation(rules, user)
