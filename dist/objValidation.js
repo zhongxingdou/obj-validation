@@ -1100,10 +1100,6 @@
 
   i18n.setCurrLocale('en');
 
-  if (typeof window !== 'undefined') {
-    window.ObjValidation = ObjValidation;
-  }
-
   ObjValidation.validateForm = validateForm;
 
   ObjValidation.vueMixin = vueMixin;
