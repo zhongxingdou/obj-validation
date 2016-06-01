@@ -31,9 +31,9 @@ export default {
 
     // set target
     vm.$watch(target, function (val) {
-      validator.setValidateTarget(val, labels)
+      validator.setTarget(val, labels)
     })
-    validator.setValidateTarget(vmTarget, labels)
+    validator.setTarget(vmTarget, labels)
 
     // do validate when any property of target changed
     function validateProp (watchExp, prop) {
@@ -71,6 +71,6 @@ export default {
   beforeDestory: function () {
     if (!this.validator) return
     this.validator.unReset(this._onValidatorReset)
-    this.validator.setValidateTarget(null)
+    this.validator.setTarget(null)
   }
 }
