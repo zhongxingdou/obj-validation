@@ -1,3 +1,6 @@
+var __checkers = {}
+var __defaultParamOfRule = {}
+
 // @todo
 // 让checker按顺序号执行，这样的话，可以让远程验证在本地验证成功后再执行
 // 错误消息多语言
@@ -35,7 +38,7 @@ function Validator(rules, obj, propLabels) {
   this.rules = rules || {}
 
   var myCheckers = {}
-  var checkers = Validator.checkers
+  var checkers = __checkers
   if (checkers) {
     for (var p in checkers) {
       myCheckers[p] = checkers[p]
@@ -48,9 +51,16 @@ function Validator(rules, obj, propLabels) {
   }
 }
 
-Validator.defaultParamOfRule = {}
+Validator.addChecker = function(name, checker) {
+  if (typeof name === 'object') {
+    Object.assign(__checkers, name)
+    return
+  }
+  __checkers[name] = checker
+}
+
 Validator.setDefaultParamForRule = function(rule, param) {
-  this.defaultParamOfRule[rule] = param
+  __defaultParamOfRule[rule] = param
 }
 
 var validateAllRunning = false
@@ -60,7 +70,7 @@ var proto = {
   },
 
   // 设置要验证的对象
-  setValidateTarget: function(obj, propLabels) {
+  setTarget: function(obj, propLabels) {
     this.reset()
     if (obj) {
       this._validateTarget = obj
@@ -68,23 +78,23 @@ var proto = {
     }
   },
 
-  getProp: function(prop) {
+  getTargetPropValue: function(prop) {
     return this._validateTarget[prop]
   },
 
-  hasRule: function(prop) {
-    if (prop in this.getContext()) {
-      return Object.keys(this.getRule(prop)).length > 0
+  isPropNeedCheck: function(prop) {
+    if (prop in this._getTarget()) {
+      return Object.keys(this._getPropRule(prop)).length > 0
     } else {
       return false
     }
   },
 
-  getContext: function() {
+  _getTarget: function() {
     return this._validateTarget
   },
 
-  getCheckerByRule: function(name) {
+  _getCheckerByRule: function(name) {
     return this.checkers[name]
   },
 
@@ -115,7 +125,7 @@ var proto = {
     if (name === 'type') {
       this._addTypeRule(prop, option)
     } else {
-      this.getRule(prop)[name] = option
+      this._getPropRule(prop)[name] = option
     }
   },
 
@@ -130,7 +140,7 @@ var proto = {
     }
   },
 
-  getRule: function(prop) {
+  _getPropRule: function(prop) {
     return this.rules[prop] || (this.rules[prop] = {})
   },
 
@@ -185,9 +195,10 @@ var proto = {
     return result
   },
 
-  isValid: function(prop) {
-    if (prop) {
-      return !this.validateErrors[prop] || Object.keys(this.validateErrors[prop]).length === 0
+  // 所有属性验证是否通过
+  isValid: function() {
+    if (arguments[0]) {
+      return this.isPropValid(arguments[0])
     }
 
     var count = 0
@@ -197,6 +208,10 @@ var proto = {
     }
 
     return count === 0
+  },
+
+  isPropValid: function(prop) {
+    return !this.validateErrors[prop] || Object.keys(this.validateErrors[prop]).length === 0
   },
 
   validate: function(prop, callback, option) {
@@ -336,7 +351,7 @@ var proto = {
   _mergeRuleDefaultParam: function(rule, param) {
     var self = this
     if (param && Object.prototype.toString.call(param) === '[object Object]') {
-      var globalDefault = Validator.defaultParamOfRule[rule] || {}
+      var globalDefault = __defaultParamOfRule[rule] || {}
       var defaultParam = self.defaultParamOfRule[rule] || {}
       param = this._deepMerge({}, globalDefault, defaultParam, param)
     }
@@ -481,14 +496,14 @@ var proto = {
     var value
     if (props.length > 1) {
       value = props.map(function(p) {
-        return self.getProp(p)
+        return self.getTargetPropValue(p)
       })
     } else {
-      value = self.getProp(props[0])
+      value = self.getTargetPropValue(props[0])
       if (rule !== 'required' && (value === '' || value === null || value === undefined)) return true
     }
 
-    var checker = self.getCheckerByRule(rule)
+    var checker = self._getCheckerByRule(rule)
 
     //是自定义的checker， rule name也是自定义的
     if (!checker && param) {
@@ -517,7 +532,7 @@ var proto = {
       self._clearErrorsFor(props[0], rule)
     }
 
-    var context = self.getContext()
+    var context = self._getTarget()
 
     var localeLabels = self._propLabels
     var labels = props
@@ -613,6 +628,13 @@ var proto = {
   }
 }
 
+// 兼容之前的版本
+proto.setValidateTarget = proto.setTarget
+proto.hasRule = proto.isPropNeedCheck
+proto.getProp = proto.getTargetPropValue
+proto.getContext = proto._getTarget
+
 Validator.prototype = proto
+
 
 export default Validator

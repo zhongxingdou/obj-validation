@@ -19,7 +19,7 @@ describe('checkers', function() {
       gender: '',
       dressing: []
     }
-    v.setValidateTarget(user)
+    v.setTarget(user)
 
     var rules = {
       'dressing,gender': {
@@ -36,7 +36,7 @@ describe('checkers', function() {
     var user = {
       name: 'hal'
     }
-    v.setValidateTarget(user)
+    v.setTarget(user)
 
     v.addRule('name', 'uniq', {collection: ['hal', 'jerry']})
 
@@ -50,7 +50,7 @@ describe('checkers', function() {
     var user = {
       name: 'hal'
     }
-    v.setValidateTarget(user)
+    v.setTarget(user)
 
     v.addRule('name', 'uniq', {
       collection: [{name: 'hal'}, {name: 'jerry'}],
@@ -69,7 +69,7 @@ describe('checkers', function() {
     var user = {
       name: ''
     }
-    v.setValidateTarget(user)
+    v.setTarget(user)
 
     v.addRule('name', 'required')
 
@@ -83,7 +83,7 @@ describe('checkers', function() {
     var user = {
       interest: []
     }
-    v.setValidateTarget(user)
+    v.setTarget(user)
 
     v.addRule('interest', 'required')
 
@@ -98,7 +98,7 @@ describe('checkers', function() {
       grossWeight: 300,
       netWeight: 350
     }
-    v.setValidateTarget(goods, {
+    v.setTarget(goods, {
       grossWeight: '毛重',
       netWeight: '净重'
     })
@@ -117,7 +117,7 @@ describe('checkers', function() {
       email: 'hal@g.com'
     }
 
-    v.setValidateTarget(user)
+    v.setTarget(user)
 
     v.addRule('email', 'async', {
       validate: function(value, option, callback, props) {
@@ -139,7 +139,7 @@ describe('checkers', function() {
 
     var invalidMsg = 'invalid email'
 
-    v.setValidateTarget(user)
+    v.setTarget(user)
 
     v.addRule('email', 'async', {
       validate: function(value, option, callback, props) {

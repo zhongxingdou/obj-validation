@@ -19,9 +19,9 @@ describe('Validator', function() {
       }
     }, validateTarget)
 
-    instance.getContext().should.equal(validateTarget)
-    instance.getRule('name').should.have.property('required', true)
-    instance.getRule('name').should.have.property('decimal', 2)
+    instance._getTarget().should.equal(validateTarget)
+    instance._getPropRule('name').should.have.property('required', true)
+    instance._getPropRule('name').should.have.property('decimal', 2)
     instance.isValid().should.be.true
   })
 
@@ -76,7 +76,7 @@ describe('Validator', function() {
     })
 
     var mergedParam
-    v.getCheckerByRule = function(name) {
+    v._getCheckerByRule = function(name) {
       var checker = {
         ajax: function(value, param) {
           mergedParam = param
@@ -86,7 +86,7 @@ describe('Validator', function() {
       return checker[name]
     }
 
-    v.setValidateTarget({
+    v.setTarget({
       name: 'hal'
     })
 
@@ -120,15 +120,15 @@ describe('Validator', function() {
   })
 
   describe('addRule(prop, ruleMap)', function () {
-    it('addRule(prop, rule, option), getRule(prop)', function() {
-      v.getRule('prop').should.not.null
-      Object.keys(v.getRule('prop')).should.be.empty
+    it('addRule(prop, rule, option), _getPropRule(prop)', function() {
+      v._getPropRule('prop').should.not.null
+      Object.keys(v._getPropRule('prop')).should.be.empty
 
       v.addRule('prop', 'required', true)
       v.addRule('prop', 'number', true)
       v.addRule('prop', 'decimal', 2)
 
-      var rule = v.getRule('prop')
+      var rule = v._getPropRule('prop')
       rule.should.have.property('required', true)
       rule.should.have.property('number', true)
       rule.should.have.property('decimal', 2)
@@ -141,7 +141,7 @@ describe('Validator', function() {
         'decimal': 2
       })
 
-      var rule = v.getRule('prop')
+      var rule = v._getPropRule('prop')
       rule.should.have.property('required', true)
       rule.should.have.property('number', true)
       rule.should.have.property('decimal', 2)
@@ -155,7 +155,7 @@ describe('Validator', function() {
         }
       })
 
-      var rule = v.getRule('prop')
+      var rule = v._getPropRule('prop')
       rule.should.have.property('required', true)
       rule.should.have.property('decimal', 2)
     })
@@ -168,23 +168,23 @@ describe('Validator', function() {
         }
       })
 
-      var rule = v.getRule('p1,p2')
+      var rule = v._getPropRule('p1,p2')
       rule.should.have.property('required', true)
       rule.should.have.property('decimal', 2)
     })
   })
 
-  describe('setValidateTarget(obj)', function() {
+  describe('setTarget(obj)', function() {
     var obj = {
       'prop': 'value'
     }
     beforeEach(function(done) {
-      v.setValidateTarget(obj)
+      v.setTarget(obj)
       done()
     })
 
-    it('getContext()', function() {
-      v.getContext().should.equal(obj)
+    it('_getTarget()', function() {
+      v._getTarget().should.equal(obj)
     })
 
     it('getProp(prop)', function() {
@@ -232,7 +232,7 @@ describe('Validator', function() {
 
   describe('validate()', function() {
     beforeEach(function(done) {
-      v.getCheckerByRule = function(name) {
+      v._getCheckerByRule = function(name) {
         var checker = {
           required: function(value) {
             return value !== '' || 'required'
@@ -260,7 +260,7 @@ describe('Validator', function() {
         checker: spy
       })
 
-      v.setValidateTarget({p1: "hal"})
+      v.setTarget({p1: "hal"})
 
       v.validate('p1')
 
@@ -268,7 +268,7 @@ describe('Validator', function() {
     })
 
     it('validate(prop)->true', function() {
-      v.setValidateTarget({
+      v.setTarget({
         name: "hal.zhong"
       })
       v.addRule('name', 'required', true)
@@ -282,7 +282,7 @@ describe('Validator', function() {
       var result = ''
 
       before(function(done) {
-        v.setValidateTarget({
+        v.setTarget({
           email: "name@domain.com"
         })
         v.addRule('email', 'isUniq', true)
@@ -304,7 +304,7 @@ describe('Validator', function() {
     })
 
     it('validate(prop)->false', function() {
-      v.setValidateTarget({
+      v.setTarget({
         name: ""
       })
       v.addRule('name', 'required', true)
@@ -320,7 +320,7 @@ describe('Validator', function() {
         markAll: true
       })
 
-      v.setValidateTarget({
+      v.setTarget({
         fname: '',
         lname: 'zhong'
       })
@@ -337,7 +337,7 @@ describe('Validator', function() {
       })
       v.addRule('lname', 'required', true)
 
-      v.setValidateTarget({
+      v.setTarget({
         fname: '',
         lname: 'zhong'
       })
@@ -348,7 +348,7 @@ describe('Validator', function() {
       v.isValid('lname').should.be.true
       v.getErrors('fname').should.containEql('invalid fullname')
 
-      v.setValidateTarget({
+      v.setTarget({
         fname: 'hal',
         lname: 'zhong'
       })
@@ -379,7 +379,7 @@ describe('Validator', function() {
       var spy = sinon.spy()
       v.onPending(spy)
 
-      v.setValidateTarget({
+      v.setTarget({
         name: 'hal'
       })
       v.addRule('name', {
@@ -396,7 +396,7 @@ describe('Validator', function() {
       var spy = sinon.spy()
       v.onValidatedAll(spy)
 
-      v.setValidateTarget({
+      v.setTarget({
         name: 'hal'
       })
       v.addRule('name', {

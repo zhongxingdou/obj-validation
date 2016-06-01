@@ -100,9 +100,9 @@ proto.initialize = function(form, validator, option) {
         if (exWrap && $.contains(exWrap, this)) return
       }
 
-      if (!validator.hasRule(prop)) return
+      if (!validator.isPropNeedCheck(prop)) return
 
-      if (validator.getProp(prop) === lastValue) return
+      if (validator.getTargetPropValue(prop) === lastValue) return
 
       var relatedProps = validator.getRelatedProps(prop)
       var validateRelated = relatedProps.length > 0
