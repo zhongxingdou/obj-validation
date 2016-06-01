@@ -6,7 +6,7 @@ Obj-Validation 是一个 JavaScript object validation 库。
 
 ## 特性：
 
-1. 支持验证对象成员间的规则
+1. 支持对象成员间的验证规则
 2. 支持对当前验证对象声明自定义规则
 3. 支持异步验证
 4. 支持验证规则组
