@@ -5,7 +5,7 @@
 
 ### 对象属性名
 
-指当前规则要验证的对象属性。如一个规则要同时验证多个属性，则用 ',' 分隔属性名，如'firstName,lastName'
+指当前规则要验证的对象属性。如一个规则要同时验证多个属性，则用 ',' 分隔属性名，如 'firstName,lastName'
 
 
 ### 规则名
@@ -32,7 +32,7 @@ let userRules = {
     // 自定义的规则名和验证函数
     englishName: function (value) {
       const pattern = /\w+\.\w+/
-      return pattern.test(value) || 'invalid format. format should like Jim.Green'
+      return pattern.test(value) || 'Invalid format. format should like Jim.Green'
     }
   }
 }
@@ -53,9 +53,9 @@ let userRules = {
 
   验证函数提供的选项，用于存放除属性值外的其他参数
 
-- callback: Function(result: Boolean | String)
+- callback: Function (result: Boolean | String)
 
-  异步验证函数的回调，形式参数的意义同验证返回的返回值
+  异步验证函数的回调，形式参数的意义同验证函数的返回值
 
 - props: [String]
 
@@ -72,7 +72,7 @@ let userRules = {
 
 - 值类型为 String
 
-  验证失败，表错误信息
+  验证失败，表错误信息，英文情况下建议格式为首单词首字母大写
 
 - 异步验证函数的返回值始终为 'pending'
 
@@ -83,8 +83,8 @@ Obj-Validation 要求异步规则的验证函数的返回结果总是字符串 '
 常见的异步验证规则有远程验证，如远程验证用户注册邮箱是否唯一。
 
 ### 全局验证函数
-全局验证规则可在任何规则声明中直接使用，它定义在 ObjValidation.checkers 中
+全局验证规则可在任何规则声明中直接使用，它定义在 ObjValidation.checkers 中。
 
 ### 局部验证函数
-局部验证函数是指在声明验证规则时直接指定
+局部验证函数是指在声明验证规则时直接指定的验证函数，它的签名应和全局验证函数一致。
 
