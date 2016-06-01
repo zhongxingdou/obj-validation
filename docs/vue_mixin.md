@@ -60,12 +60,12 @@ new Vue({
     <p>
       <label for="name">Name</label>
       <input type="text" v-model="user.name">
-      <span class="help-block">{{ validateError.name }}
+      <span class="help-block">{{ validateError.name }}</span>
     </p>
     <p>
       <label for="name">Age</label>
       <input type="text" v-model="user.age">
-      <span class="help-block">{{ validateError.age }}
+      <span class="help-block">{{ validateError.age }}</span>
     </p>
     <p>
       <button :disabled="isInValid">Submit</button>
