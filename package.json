@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "mocha",
-    "build": "rollup -c build/rollup.config.js"
+    "build": "rollup -c build/rollup.config.js",
+    "docsbuild": "bash ./build/update-docs.sh"
   },
   "keywords": [
     "validation"
