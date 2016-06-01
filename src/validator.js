@@ -527,7 +527,7 @@ var proto = {
       })
     }
 
-    var result = checker.apply(context, [value, param, wrapCb, labels])
+    var result = checker.apply(context, [value, param, wrapCb, props, labels])
     return result
   },
 

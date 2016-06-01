@@ -21,12 +21,12 @@ function makeErrorMsg(rule, defaultMsg) {
 }
 
 export default {
-  depends: function(value, option, callback, props) {
+  depends: function(value, option, callback, props, labels) {
     var dependsFilled = value.slice(1).every(function(v) {
       return hasValue(v)
     })
 
-    return dependsFilled || option.message || makeErrorMsg('depends', '{0} depends {1}', props[0], props.slice(1).join(' '))
+    return dependsFilled || option.message || makeErrorMsg('depends', '{0} depends {1}', labels[0], labels.slice(1).join(' '))
   },
 
   uniq: function(value, option) {
@@ -208,8 +208,8 @@ export default {
     return (value >= option.min && value <= option.max) ? true : (option.message || makeErrorMsg('range', 'should between {0} and {1}', option.min, option.max))
   },
 
-  async: function(value, option, callback, props) {
-    option.validate(value, option, callback, props)
+  async: function(value, option, callback, props, labels) {
+    option.validate(value, option, callback, props, labels)
     return 'pending'
   },
 
@@ -227,7 +227,7 @@ export default {
     return Number(value) < option.value ? true : option.message || makeErrorMsg('lessThan', 'should less than {0}', option.value)
   },
 
-  compare: function(value, option, callback, props) {
+  compare: function(value, option, callback, props, labels) {
     var p1 = value[0]
     var p2 = value[1]
 
@@ -267,7 +267,7 @@ export default {
         msg = getLocaleMsg('compare:notEqual', '{0} should not equal {1}')
         break
     }
-    return result ? true : option.message || util.format(msg, props[0], props[1])
+    return result ? true : option.message || util.format(msg, labels[0], labels[1])
   },
 
   pattern: function(value, option) {
