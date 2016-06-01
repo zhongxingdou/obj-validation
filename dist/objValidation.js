@@ -1058,11 +1058,6 @@
 
         vm.$set('validateState.' + prop, true);
         vm.$set('validateError.' + prop, '');
-
-        validator.validate(prop, function (isValid) {
-          vm.validateState[prop] = isValid;
-          vm.validateError[prop] = validator.getErrors(prop).join('\n');
-        });
       }
 
       let props = option.targetProps || Object.keys(vmTarget);
