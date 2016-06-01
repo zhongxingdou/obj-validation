@@ -2,14 +2,14 @@ import jQuery from 'jquery'
 var $ = jQuery
 
 function validateForm() {
-  if (this.constructor != ValidateForm) {
-    return new ValidateForm.apply(this, arguments)
+  if (this.constructor != validateForm) {
+    return new validateForm.apply(null, arguments)
   }
 
   this.initialize.apply(this, arguments)
 }
 
-var proto = ValidateForm.prototype
+var proto = validateForm.prototype
 var lastValue
 
 proto.initialize = function(form, validator, option) {
