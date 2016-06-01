@@ -1,6 +1,6 @@
 {
   "name": "obj-validation",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "javascript object validation",
   "main": "dist/objValidation.js",
   "directories": {
@@ -18,6 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "better-assert": "^1.0.2",
+    "jquery": "^2.2.4",
     "rollup-plugin-babel": "^2.3.8",
     "should": "^8.1.1",
     "sinon": "^1.17.2"
