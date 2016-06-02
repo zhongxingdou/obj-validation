@@ -59,13 +59,13 @@ Validator.addChecker = function(name, checker) {
   __checkers[name] = checker
 }
 
-Validator.setDefaultParamForRule = function(rule, param) {
+Validator.setGlobalRuleOption = function(rule, param) {
   __defaultParamOfRule[rule] = param
 }
 
 var validateAllRunning = false
 var proto = {
-  setDefaultParamForRule: function(rule, param) {
+  setDefaultRuleOption: function(rule, param) {
     this.defaultParamOfRule[rule] = param
   },
 
@@ -78,16 +78,12 @@ var proto = {
     }
   },
 
-  getTargetPropValue: function(prop) {
+  getPropValue: function(prop) {
     return this._validateTarget[prop]
   },
 
   isPropNeedCheck: function(prop) {
-    if (prop in this._getTarget()) {
-      return Object.keys(this._getPropRule(prop)).length > 0
-    } else {
-      return false
-    }
+    return Object.keys(this._getPropRule(prop)).length > 0
   },
 
   _getTarget: function() {
@@ -129,7 +125,7 @@ var proto = {
     }
   },
 
-  clearRules: function () {
+  _clearRules: function () {
     this.rules = {}
   },
 
@@ -496,10 +492,10 @@ var proto = {
     var value
     if (props.length > 1) {
       value = props.map(function(p) {
-        return self.getTargetPropValue(p)
+        return self.getPropValue(p)
       })
     } else {
-      value = self.getTargetPropValue(props[0])
+      value = self.getPropValue(props[0])
       if (rule !== 'required' && (value === '' || value === null || value === undefined)) return true
     }
 
@@ -524,7 +520,7 @@ var proto = {
 
     var wrapCb = self._wrapCallback(props, rule, callback)
 
-    if (param && param.markAll) {
+    if (param && param.markRelatedProps) {
       props.forEach(function(p) {
         self._clearErrorsFor(p, rule)
       })
@@ -577,7 +573,7 @@ var proto = {
         if (result) {
           errorsCount++
 
-          if (param && param.markAll) {
+          if (param && param.markRelatedProps) {
             props.forEach(function(p) {
               self._addErrorTo(p, rule, result)
             })
@@ -631,8 +627,10 @@ var proto = {
 // 兼容之前的版本
 proto.setValidateTarget = proto.setTarget
 proto.hasRule = proto.isPropNeedCheck
-proto.getProp = proto.getTargetPropValue
+proto.getProp = proto.getPropValue
 proto.getContext = proto._getTarget
+proto.setDefaultParamForRule = proto.setDefaultRuleOption
+Validator.setDefaultParamForRule = Validator.setGlobalRuleOption
 
 Validator.prototype = proto
 

@@ -11,7 +11,7 @@ describe('checkers', function() {
   })
 
   afterEach(function(){
-    v.clearRules()
+    v._clearRules()
   })
 
   it('depends', function() {

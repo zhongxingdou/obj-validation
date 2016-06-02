@@ -40,18 +40,18 @@ describe('Validator', function() {
     v.rules.score.should.have.property('number', type.rules.number)
   })
 
-  it('setDefaultParamForRule(rule, param)', function() {
+  it('setDefaultRuleOption(rule, param)', function() {
     var ajaxOption = {
       type: 'post'
     }
 
-    v.setDefaultParamForRule('remote', ajaxOption)
+    v.setDefaultRuleOption('remote', ajaxOption)
 
     v.defaultParamOfRule.should.have.property('remote', ajaxOption)
   })
 
   it('merge param', function() {
-    Validator.setDefaultParamForRule('ajax', {
+    Validator.setGlobalRuleOption('ajax', {
       type: 'json',
       dataType: 'json',
       data: {
@@ -64,7 +64,7 @@ describe('Validator', function() {
       }
     })
 
-    v.setDefaultParamForRule('ajax', {
+    v.setDefaultRuleOption('ajax', {
       dataType: 'text',
       data: {
         user: {

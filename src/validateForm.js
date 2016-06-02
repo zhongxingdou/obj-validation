@@ -102,7 +102,7 @@ proto.initialize = function(form, validator, option) {
 
       if (!validator.isPropNeedCheck(prop)) return
 
-      if (validator.getTargetPropValue(prop) === lastValue) return
+      if (validator.getPropValue(prop) === lastValue) return
 
       var relatedProps = validator.getRelatedProps(prop)
       var validateRelated = relatedProps.length > 0
