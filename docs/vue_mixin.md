@@ -1,5 +1,5 @@
 # 配合 Vue 使用
-Obj-Validation 提供了一个 mixin 模块让 Vue 的 component 可以很方便的使用它。Vue 组件可在组件 option 中声明 **validate** 项来配置 mixin 模块的行为。在 Vue 的组件代码中，也可以直接调用验证器实例的方法来完成数据验证。另外，mxin 模块声明了 **validateError** 和 **validateState** 这两个数据对象用于保存验证错误信息和验证状态，它们可以很方便的引用以及在组件模板中绑定显示。
+Obj-Validation 提供了一个 mixin 模块让 Vue 的 component 可以很方便的使用它。Vue 组件可在组件 option 中声明 **validate** 项来配置 mixin 模块的行为。在 Vue 的组件代码中，也可以直接调用验证器实例的方法来完成数据验证。另外，mxin 模块声明了 **validateError** 和 **validateState** 这两个数据对象用于保存验证错误消息和验证状态，它们可以很方便的引用以及在组件模板中绑定显示。
 
 ```javascript
 import ObjValidation from  'obj-validation'

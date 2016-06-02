@@ -26,7 +26,7 @@
 ### `.addChecker(checkers:Object)`
 注册验证函数
 
-### `.setDefaultParamForRule(rule:String, param:Object)`
+### `.setGlobalRuleOption(ruleName:String, ruleOption:Object)`
 为指定验证规则设置全局默认参数
 
 ### `.validateForm(form:HTMLFormElement, validator:ObjValidation, option:Object)`

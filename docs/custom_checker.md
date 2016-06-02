@@ -1,5 +1,7 @@
 # 自定义验证函数
-## 自定义异步规则函数
+
+## 自定义异步验证函数
+
 ```javascript
 import ObjValidation from 'obj-validation'
 import $ from 'jquery'
