@@ -27,7 +27,7 @@ export default {
       }
     }
 
-    vm.validator = validator
+    vm.$validator = validator
 
     // set target
     vm.$watch(target, function (val) {
