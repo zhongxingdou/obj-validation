@@ -6,6 +6,12 @@
 
   jQuery = 'default' in jQuery ? jQuery['default'] : jQuery;
 
+  var babelHelpers_typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+  };
+
   var __checkers = {};
   var __defaultParamOfRule = {};
 
@@ -60,7 +66,7 @@
   }
 
   Validator.addChecker = function (name, checker) {
-    if (typeof name === 'object') {
+    if ((typeof name === 'undefined' ? 'undefined' : babelHelpers_typeof(name)) === 'object') {
       Object.assign(__checkers, name);
       return;
     }
@@ -73,12 +79,12 @@
 
   var validateAllRunning = false;
   var proto = {
-    setDefaultRuleOption: function (rule, param) {
+    setDefaultRuleOption: function setDefaultRuleOption(rule, param) {
       this.defaultParamOfRule[rule] = param;
     },
 
     // 设置要验证的对象
-    setTarget: function (obj, propLabels) {
+    setTarget: function setTarget(obj, propLabels) {
       this.reset();
       if (obj) {
         this._validateTarget = obj;
@@ -86,23 +92,23 @@
       }
     },
 
-    getPropValue: function (prop) {
+    getPropValue: function getPropValue(prop) {
       return this._validateTarget[prop];
     },
 
-    isPropNeedCheck: function (prop) {
+    isPropNeedCheck: function isPropNeedCheck(prop) {
       return Object.keys(this._getPropRule(prop)).length > 0;
     },
 
-    _getTarget: function () {
+    _getTarget: function _getTarget() {
       return this._validateTarget;
     },
 
-    _getCheckerByRule: function (name) {
+    _getCheckerByRule: function _getCheckerByRule(name) {
       return this.checkers[name];
     },
 
-    getInvalidProps: function () {
+    getInvalidProps: function getInvalidProps() {
       var self = this;
       var inValidProps = Object.keys(this.validateErrors).filter(function (prop) {
         return !self.isValid(prop);
@@ -111,14 +117,14 @@
     },
 
     // @todo 当prop为数组时，如何让验证器，验证一次，将相关属性都标记为错误
-    addRule: function (prop, name, option) {
+    addRule: function addRule(prop, name, option) {
       var self = this;
 
       if (Array.isArray(prop)) {
         prop = prop.join(',');
       }
 
-      if (typeof name === 'object') {
+      if ((typeof name === 'undefined' ? 'undefined' : babelHelpers_typeof(name)) === 'object') {
         var map = name;
         for (var p in map) {
           this.addRule(prop, p, map[p]);
@@ -133,23 +139,23 @@
       }
     },
 
-    _clearRules: function () {
+    _clearRules: function _clearRules() {
       this.rules = {};
     },
 
-    _addTypeRule: function (prop, type) {
+    _addTypeRule: function _addTypeRule(prop, type) {
       var typeRules = type.rules;
       for (var rule in typeRules) {
         this.addRule(prop, rule, typeRules[rule]);
       }
     },
 
-    _getPropRule: function (prop) {
+    _getPropRule: function _getPropRule(prop) {
       return this.rules[prop] || (this.rules[prop] = {});
     },
 
-    _addErrorTo: function (prop, rule, error) {
-      if (arguments.length < 3 && typeof rule === 'object') {
+    _addErrorTo: function _addErrorTo(prop, rule, error) {
+      if (arguments.length < 3 && (typeof rule === 'undefined' ? 'undefined' : babelHelpers_typeof(rule)) === 'object') {
         error = rule;
         for (var aRule in error) {
           this._addErrorTo(prop, aRule, error[aRule]);
@@ -163,7 +169,7 @@
       this.validateErrors[prop][rule] = error;
     },
 
-    _clearErrorsFor: function (prop, rule) {
+    _clearErrorsFor: function _clearErrorsFor(prop, rule) {
       if (!rule) {
         delete this.validateErrors[prop];
       } else {
@@ -177,7 +183,7 @@
       }
     },
 
-    getErrors: function (prop) {
+    getErrors: function getErrors(prop) {
       if (!prop) return this._getAllErrors();
 
       var result = [];
@@ -190,7 +196,7 @@
       return result;
     },
 
-    _getAllErrors: function () {
+    _getAllErrors: function _getAllErrors() {
       var result = [];
       var errors = this.validateErrors;
       for (var p in errors) {
@@ -200,7 +206,7 @@
     },
 
     // 所有属性验证是否通过
-    isValid: function () {
+    isValid: function isValid() {
       if (arguments[0]) {
         return this.isPropValid(arguments[0]);
       }
@@ -214,12 +220,12 @@
       return count === 0;
     },
 
-    isPropValid: function (prop) {
+    isPropValid: function isPropValid(prop) {
       return !this.validateErrors[prop] || Object.keys(this.validateErrors[prop]).length === 0;
     },
 
-    validate: function (prop, callback, option) {
-      var propType = typeof prop;
+    validate: function validate(prop, callback, option) {
+      var propType = typeof prop === 'undefined' ? 'undefined' : babelHelpers_typeof(prop);
 
       if (propType === 'function') {
         option = callback;
@@ -230,7 +236,7 @@
         prop = callback = null;
       }
 
-      if (callback && typeof callback === 'object') {
+      if (callback && (typeof callback === 'undefined' ? 'undefined' : babelHelpers_typeof(callback)) === 'object') {
         option = callback;
         callback = null;
       }
@@ -244,7 +250,7 @@
       }
     },
 
-    _validateAll: function (callback, option) {
+    _validateAll: function _validateAll(callback, option) {
       var checkFully = option.checkFully;
 
       if (validateAllRunning) return;
@@ -276,10 +282,10 @@
       }
     },
 
-    _onceValidatedAll: function (observer) {
+    _onceValidatedAll: function _onceValidatedAll(observer) {
       var self = this;
 
-      var proxy = function () {
+      var proxy = function proxy() {
         self.unValidated(proxy);
         observer.apply(this, arguments);
       };
@@ -287,7 +293,7 @@
       self.onValidatedAll(proxy);
     },
 
-    onPending: function (startObserver, endObserver) {
+    onPending: function onPending(startObserver, endObserver) {
       if (startObserver) {
         this._pendingStartObservers.push(startObserver);
       }
@@ -297,34 +303,34 @@
       }
     },
 
-    onReset: function (observer) {
+    onReset: function onReset(observer) {
       this._resetObservers.push(observer);
     },
 
-    unReset: function (observer) {
+    unReset: function unReset(observer) {
       var i = this._resetObservers.indexOf(observer);
       if (i !== -1) {
         this._resetObservers.splice(i);
       }
     },
 
-    onValidatedAll: function (observer) {
+    onValidatedAll: function onValidatedAll(observer) {
       this._validatedObservers.push(observer);
     },
 
-    unValidated: function (observer) {
+    unValidated: function unValidated(observer) {
       var i = this._validatedObservers.indexOf(observer);
       this._validatedObservers.splice(i, 1);
     },
 
-    reset: function () {
+    reset: function reset() {
       this.validateErrors = {};
       this._pendingCount = 0;
       this._propPendingCount = {};
       fire(this, 'reset');
     },
 
-    _countingPending: function (props) {
+    _countingPending: function _countingPending(props) {
       var self = this;
       if (self._pendingCount === 0) {
         fire(self, 'pendingStart');
@@ -340,7 +346,7 @@
       });
     },
 
-    _getSortedRuleNames: function (rules) {
+    _getSortedRuleNames: function _getSortedRuleNames(rules) {
       var ruleNames = Object.keys(rules);
       if (rules.remote) {
         var remoteAt = ruleNames.indexOf('remote');
@@ -352,7 +358,7 @@
       return ruleNames;
     },
 
-    _mergeRuleDefaultParam: function (rule, param) {
+    _mergeRuleDefaultParam: function _mergeRuleDefaultParam(rule, param) {
       var self = this;
       if (param && Object.prototype.toString.call(param) === '[object Object]') {
         var globalDefault = __defaultParamOfRule[rule] || {};
@@ -362,7 +368,7 @@
       return param;
     },
 
-    _wrapCallback: function (props, rule, callback) {
+    _wrapCallback: function _wrapCallback(props, rule, callback) {
       var self = this;
       return function (result) {
         self._pendingCount--;
@@ -391,7 +397,7 @@
       };
     },
 
-    _getAllRuleKeyOfProp: function (prop, includeRelated) {
+    _getAllRuleKeyOfProp: function _getAllRuleKeyOfProp(prop, includeRelated) {
       var simpleExps = [];
       var plusExps = [];
 
@@ -413,17 +419,17 @@
       return simpleExps.concat(plusExps);
     },
 
-    _isGroupExp: function (exp) {
+    _isGroupExp: function _isGroupExp(exp) {
       return exp.indexOf(',') !== -1;
     },
 
-    _parseGroupProps: function (exp) {
+    _parseGroupProps: function _parseGroupProps(exp) {
       return exp.split(',').map(function (p) {
         return p.trim();
       });
     },
 
-    getRelatedProps: function (prop) {
+    getRelatedProps: function getRelatedProps(prop) {
       var simpleExps = [];
       var rules = this.rules;
 
@@ -445,7 +451,7 @@
       return simpleExps;
     },
 
-    _validateProp: function (prop, callback, option) {
+    _validateProp: function _validateProp(prop, callback, option) {
       var self = this;
       var checkFully = option.checkFully;
 
@@ -461,7 +467,7 @@
 
       var wrapCb = callback;
       if (callback && len > 1) {
-        wrapCb = function () {
+        wrapCb = function wrapCb() {
           var isValid = self.isValid(prop);
           if (!isValid && !checkFully) {
             return callback(isValid);
@@ -492,7 +498,7 @@
       return hasPending || self.isValid(prop);
     },
 
-    _checkRule: function (props, rule, param, callback) {
+    _checkRule: function _checkRule(props, rule, param, callback) {
       var self = this;
       if (rule === 'type') return true;
 
@@ -511,7 +517,7 @@
 
       //是自定义的checker， rule name也是自定义的
       if (!checker && param) {
-        var pt = typeof param;
+        var pt = typeof param === 'undefined' ? 'undefined' : babelHelpers_typeof(param);
         if (pt === 'function') {
           checker = param;
           param = undefined;
@@ -552,7 +558,7 @@
     },
 
     //验证某个属性，callback仅用于异步验证器的回调，全是同步验证器的话，返回值即是验证结果
-    _validatePropExp: function (prop, callback, option) {
+    _validatePropExp: function _validatePropExp(prop, callback, option) {
       var checkFully = option.checkFully;
 
       var self = this,
@@ -611,11 +617,11 @@
       return valid;
     },
 
-    _deepMerge: function (object) {
+    _deepMerge: function _deepMerge(object) {
       var source, key, srcValue, objValue;
 
-      var isValidObj = function (o) {
-        return o && typeof o === 'object';
+      var isValidObj = function isValidObj(o) {
+        return o && (typeof o === 'undefined' ? 'undefined' : babelHelpers_typeof(o)) === 'object';
       };
 
       for (var i = 1; i < arguments.length; i++) {
@@ -650,14 +656,14 @@
   var currDict = {};
 
   var i18n = {
-    setCurrLocale: function (locale) {
+    setCurrLocale: function setCurrLocale(locale) {
       currLocale = locale;
       currDict = localeDict[currLocale] || {};
     },
-    getLocaleString: function (key) {
+    getLocaleString: function getLocaleString(key) {
       return currDict[key];
     },
-    addLocale: function (locale, dict) {
+    addLocale: function addLocale(locale, dict) {
       localeDict[locale] = Object.assign({}, localeDict[locale], dict);
       this.setCurrLocale(locale);
     }
@@ -687,7 +693,7 @@
       popupMessage: false,
       checkFully: true,
       excludes: '',
-      i18n: function (msg) {
+      i18n: function i18n(msg) {
         return msg;
       },
       alert: window.alert
@@ -860,22 +866,22 @@
   };
 
   var vueMixin = {
-    data: function () {
+    data: function data() {
       return {
         validateState: {},
         validateError: {}
       };
     },
-    created: function () {
-      let vm = this;
-      let option = this.$options.validate;
+    created: function created() {
+      var vm = this;
+      var option = this.$options.validate;
       if (!option) return;
 
-      let target = option.target;
-      let vmTarget = vm.$get(target);
-      let labels = option.labels;
-      let validator = option.validator;
-      let rules = option.rules;
+      var target = option.target;
+      var vmTarget = vm.$get(target);
+      var labels = option.labels;
+      var validator = option.validator;
+      var rules = option.rules;
 
       // rules 优先于 validator
       if (rules) {
@@ -886,7 +892,7 @@
         }
       }
 
-      vm.validator = validator;
+      vm.$validator = validator;
 
       // set target
       vm.$watch(target, function (val) {
@@ -907,27 +913,27 @@
         vm.$set('validateError.' + prop, '');
       }
 
-      let props = option.targetProps || Object.keys(vmTarget);
+      var props = option.targetProps || Object.keys(vmTarget);
       props.forEach(function (prop) {
         validateProp(target + '.' + prop, prop);
       });
 
       // handle validator reset
-      let onReset = function () {
-        let state = vm.validateState;
-        for (let p in state) {
+      var onReset = function onReset() {
+        var state = vm.validateState;
+        for (var p in state) {
           state[p] = true;
         }
 
-        let error = vm.validateError;
-        for (let p in error) {
-          error[p] = '';
+        var error = vm.validateError;
+        for (var _p in error) {
+          error[_p] = '';
         }
       };
       vm._onValidatorReset = onReset;
       validator.onReset(onReset);
     },
-    beforeDestory: function () {
+    beforeDestory: function beforeDestory() {
       if (!this.validator) return;
       this.validator.unReset(this._onValidatorReset);
       this.validator.setTarget(null);
@@ -988,7 +994,7 @@
   }
 
   var checkers = {
-    depends: function (value, option, callback, props, labels) {
+    depends: function depends(value, option, callback, props, labels) {
       var dependsFilled = value.slice(1).every(function (v) {
         return hasValue(v);
       });
@@ -996,7 +1002,7 @@
       return dependsFilled || option.message || makeErrorMsg('depends', '{0} depends {1}', labels[0], labels.slice(1).join(' '));
     },
 
-    uniq: function (value, option) {
+    uniq: function uniq(value, option) {
       var getItem = option.getItem;
       var checker = option.checker;
       var list = option.collection || option.getCollection.call(this);
@@ -1022,9 +1028,9 @@
       return !exists || option.message || getLocaleMsg('uniq', 'should be unique');
     },
 
-    required: function (value, option) {
+    required: function required(value, option) {
       if (option === false) return;
-      if (typeof option !== 'object') option = {};
+      if ((typeof option === 'undefined' ? 'undefined' : babelHelpers_typeof(option)) !== 'object') option = {};
 
       if (Array.isArray(value)) {
         return value && value.length > 0 ? true : option.message || getLocaleMsg('required:leastOne', 'should have at least one');
@@ -1032,14 +1038,14 @@
       return value.trim().length > 0 ? true : option.message || getLocaleMsg('required', 'required');
     },
 
-    chosed: function (value, option) {
+    chosed: function chosed(value, option) {
       if (option === false) return;
-      if (typeof option !== 'object') option = {};
+      if ((typeof option === 'undefined' ? 'undefined' : babelHelpers_typeof(option)) !== 'object') option = {};
 
       return value != -1 ? true : option.message || getLocaleMsg('chosed', 'required');
     },
 
-    email: function (value, option) {
+    email: function email(value, option) {
       if (option === false) return;
 
       if (/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(value)) {
@@ -1049,7 +1055,7 @@
       }
     },
 
-    url: function (value, option) {
+    url: function url(value, option) {
       if (option === false) return;
 
       // contributed by Scott Gonzalez: http://projects.scottsplayground.com/iri/
@@ -1060,30 +1066,30 @@
       }
     },
 
-    date: function (value, option) {
+    date: function date(value, option) {
       if (option === false) return;
       return !/invalid|NaN/.test(new Date(value).toString()) ? true : option.message || getLocaleMsg('date', 'invalid date');
     },
 
-    dateISO: function (value, option) {
+    dateISO: function dateISO(value, option) {
       if (option === false) return;
       return (/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(value) ? true : option.message || getLocaleMsg('dateISO', 'invalid date ( ISO ')
       );
     },
 
-    number: function (value, option) {
+    number: function number(value, option) {
       if (option === false) return;
       return (/^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value) ? true : option.message || getLocaleMsg('number', 'invalid number')
       );
     },
 
-    digits: function (value, option) {
+    digits: function digits(value, option) {
       if (option === false) return;
       return (/^\d+$/.test(value) ? true : option.message || getLocaleMsg('digits', 'invalid digits')
       );
     },
 
-    decimal: function (value, option) {
+    decimal: function decimal(value, option) {
       if (typeof option === 'number') option = {
         precision: option
       };
@@ -1092,7 +1098,7 @@
     },
 
     // based on http://en.wikipedia.org/wiki/Luhn/
-    creditcard: function (value, option) {
+    creditcard: function creditcard(value, option) {
       if (option === false) return;
       // accept only spaces, digits and dashes
       if (/[^0-9 \-]+/.test(value)) {
@@ -1127,7 +1133,7 @@
       return nCheck % 10 === 0 ? true : option.message || getLocaleMsg('creditcard', 'invalid credit card number');
     },
 
-    length: function (value, option) {
+    length: function length(value, option) {
       if (typeof option === 'number') option = {
         max: option
       };
@@ -1145,7 +1151,7 @@
       }
     },
 
-    count: function (value, option) {
+    count: function count(value, option) {
       if (typeof option === 'number') option = {
         max: option
       };
@@ -1161,44 +1167,44 @@
       }
     },
 
-    min: function (value, option) {
+    min: function min(value, option) {
       if (typeof option === 'number') option = {
         min: option
       };
       return value >= option.min ? true : option.message || makeErrorMsg('min', 'should less than or equal to {0}', option.min);
     },
 
-    max: function (value, option) {
+    max: function max(value, option) {
       if (typeof option === 'number') option = {
         max: option
       };
       return value <= option.max ? true : option.message || makeErrorMsg('max', 'should less than or equal to {0}', option.max);
     },
 
-    range: function (value, option) {
+    range: function range(value, option) {
       return value >= option.min && value <= option.max ? true : option.message || makeErrorMsg('range', 'should between {0} and {1}', option.min, option.max);
     },
 
-    async: function (value, option, callback, props, labels) {
+    async: function async(value, option, callback, props, labels) {
       option.validate(value, option, callback, props, labels);
       return 'pending';
     },
 
-    greaterThan: function (value, option) {
+    greaterThan: function greaterThan(value, option) {
       if (typeof option === 'number') option = {
         value: option
       };
       return Number(value) > option.value ? true : option.message || makeErrorMsg('greaterThan', 'should greater than {0}', option.value);
     },
 
-    lessThan: function (value, option) {
+    lessThan: function lessThan(value, option) {
       if (typeof option === 'number') option = {
         value: option
       };
       return Number(value) < option.value ? true : option.message || makeErrorMsg('lessThan', 'should less than {0}', option.value);
     },
 
-    compare: function (value, option, callback, props, labels) {
+    compare: function compare(value, option, callback, props, labels) {
       var p1 = value[0];
       var p2 = value[1];
 
@@ -1241,7 +1247,7 @@
       return result ? true : option.message || util.format(msg, labels[0], labels[1]);
     },
 
-    pattern: function (value, option) {
+    pattern: function pattern(value, option) {
       var regexp = 'regexp' in option ? option.regexp : option;
       if (typeof regexp === 'string') {
         regexp = new RegExp('^(?:' + regexp + ')$');
@@ -1249,7 +1255,7 @@
       return regexp.test(value) ? true : option.message || getLocaleMsg('pattern', 'invalid format');
     },
 
-    time: function (value, option) {
+    time: function time(value, option) {
       if (option === false) return;
       return (/^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value) ? true : option.message || getLocaleMsg('time', 'should between 00:00 and 23:59')
       );
