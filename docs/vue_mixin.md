@@ -45,7 +45,7 @@ new Vue({
   },
   methods: {
     submit: () {
-      this.validator.validate(function (isValid){
+      this.$validator.validate(function (isValid){
         if(isValid) {
           // submit form
         }

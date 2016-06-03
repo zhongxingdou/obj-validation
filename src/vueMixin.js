@@ -69,8 +69,8 @@ export default {
     validator.onReset(onReset)
   },
   beforeDestory: function () {
-    if (!this.validator) return
-    this.validator.unReset(this._onValidatorReset)
-    this.validator.setTarget(null)
+    if (!this.$validator) return
+    this.$validator.unReset(this._onValidatorReset)
+    this.$validator.setTarget(null)
   }
 }
