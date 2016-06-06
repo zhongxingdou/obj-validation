@@ -1,27 +1,19 @@
+import EventObserver from './EventObserver'
+
 var __checkers = {}
 var __defaultParamOfRule = {}
 
 // @todo
 // 让checker按顺序号执行，这样的话，可以让远程验证在本地验证成功后再执行
 // 错误消息多语言
-function fire(self, eventType, param) {
-  var map = {
-    pendingStart: self._pendingStartObservers,
-    pendingEnd: self._pendingEndObservers,
-    validatedAll: self._validatedObservers,
-    reset: self._resetObservers
-  }
-
-  var observers = map[eventType]
-
-  if (!observers) return
-
-  observers.forEach(function(observer) {
-    observer(param)
-  })
-}
-
 function Validator(rules, obj, propLabels) {
+  // init event
+  var validEvent = ['pendingStart', 'pendingEnd', 'reset', 'validated']
+  var _eventObserver = this._eventObserver = new EventObserver(validEvent)
+  this.on = _eventObserver.on.bind(_eventObserver)
+  this.off = _eventObserver.off.bind(_eventObserver)
+  this._fire = _eventObserver.fire.bind(_eventObserver)
+
   this.validateErrors = {}
   this._pendingCount = 0
   this._propPendingCount = {}
@@ -261,7 +253,7 @@ var proto = {
       var result = self.isValid()
 
       validateAllRunning = false
-      fire(self, 'validatedAll', result)
+      self._fire('validated', result)
       return result
     } else {
       return 'pending'
@@ -280,46 +272,21 @@ var proto = {
   },
 
   onPending: function(startObserver, endObserver) {
-    if (startObserver) {
-      this._pendingStartObservers.push(startObserver)
-    }
-
-    if (endObserver) {
-      this._pendingEndObservers.push(endObserver)
-    }
-  },
-
-  onReset: function(observer) {
-    this._resetObservers.push(observer)
-  },
-
-  unReset: function(observer) {
-    var i = this._resetObservers.indexOf(observer)
-    if (i !== -1) {
-      this._resetObservers.splice(i)
-    }
-  },
-
-  onValidatedAll: function(observer) {
-    this._validatedObservers.push(observer)
-  },
-
-  unValidated: function(observer) {
-    var i = this._validatedObservers.indexOf(observer)
-    this._validatedObservers.splice(i, 1)
+    if (startObserver) this.on('pendingStart', startObserver)
+    if (endObserver) this.on('pendingEnd', endObserver)
   },
 
   reset: function() {
     this.validateErrors = {}
     this._pendingCount = 0
     this._propPendingCount = {}
-    fire(this, 'reset')
+    this._fire('reset')
   },
 
   _countingPending: function(props) {
     var self = this
     if (self._pendingCount === 0) {
-      fire(self, 'pendingStart')
+      self._fire('pendingStart')
     }
 
     props.forEach(function(p) {
@@ -369,11 +336,11 @@ var proto = {
           if (self._propPendingCount[p] === 0) {
             if (self._pendingCount === 0) {
               var isValid = self.isValid()
-              fire(self, 'pendingEnd', isValid)
+              self._fire('pendingEnd', isValid)
 
               if (validateAllRunning) {
                 validateAllRunning = false
-                fire(self, 'validatedAll', isValid)
+                self._fire('validated', isValid)
               }
             }
 
@@ -631,6 +598,20 @@ proto.getProp = proto.getPropValue
 proto.getContext = proto._getTarget
 proto.setDefaultParamForRule = proto.setDefaultRuleOption
 Validator.setDefaultParamForRule = Validator.setGlobalRuleOption
+
+// 兼容旧的事件绑定，解绑
+proto.onReset = function(observer) {
+  this.on('reset', observer)
+}
+proto.unReset = function(observer) {
+  this.off('reset', observer)
+}
+proto.onValidatedAll = function(observer) {
+  this.on('validated', observer)
+}
+proto.unValidated = function(observer) {
+  this.off('validated', observer)
+}
 
 Validator.prototype = proto
 
