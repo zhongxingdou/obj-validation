@@ -26,5 +26,5 @@
   - [.getPropErrors()](api/getPropErrors.md)
   - [.reset()](api/reset.md)
   - [.on()](api/on.md)
-  - [.off()](api/un.md)
+  - [.off()](api/off.md)
   - [.onPending()](api/onPending.md)
