@@ -1,6 +1,6 @@
-# `.onPending(pendingStartHandler, pendingEndHandler)`
+# `.onPending(startHandler, endHandler)`
 
-监听 pendingStart 和 pendingEnd 事件
+监听 "pendingStart" 和 "pendingEnd" 事件
 
 ## 参数
 

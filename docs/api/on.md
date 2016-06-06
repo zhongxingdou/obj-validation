@@ -6,7 +6,7 @@
 
 - event: String
 
-    事件名，可用的事件名包括 validated reset pendingStart pendingEnd
+    事件名，可用的事件名包括 "validated" "reset" "pendingStart" "pendingEnd"，[了解事件](instance_events.md)
 
 - handler: Function
 
