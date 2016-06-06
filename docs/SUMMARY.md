@@ -27,3 +27,4 @@
   - [.reset()](api/reset.md)
   - [.on()](api/on.md)
   - [.off()](api/un.md)
+  - [.onPending()](api/onPending.md)
