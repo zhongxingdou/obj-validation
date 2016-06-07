@@ -12,9 +12,12 @@ var i18n = {
     return currDict[key]
   },
   addLocale: function (locale, dict) {
-    localeDict[locale] = Object.assign(
-      {}, localeDict[locale], dict
-    )
+    let currDict = localeDict[locale]
+    if (!currDict) currDict = localeDict[locale] = {}
+    for(let p in dict) {
+      currDict[p] = dict[p]
+    }
+
     this.setCurrLocale(locale)
   }
 }

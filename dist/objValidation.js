@@ -6,12 +6,6 @@
 
   jQuery = 'default' in jQuery ? jQuery['default'] : jQuery;
 
-  var babelHelpers_typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
-  };
-
   function EventObserver(validEvent) {
     this._observers = {};
     this._validEvent = validEvent;
@@ -59,6 +53,111 @@
     }
   };
 
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+  };
+
+  var jsx = function () {
+    var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7;
+    return function createRawReactElement(type, props, key, children) {
+      var defaultProps = type && type.defaultProps;
+      var childrenLength = arguments.length - 3;
+
+      if (!props && childrenLength !== 0) {
+        props = {};
+      }
+
+      if (props && defaultProps) {
+        for (var propName in defaultProps) {
+          if (props[propName] === void 0) {
+            props[propName] = defaultProps[propName];
+          }
+        }
+      } else if (!props) {
+        props = defaultProps || {};
+      }
+
+      if (childrenLength === 1) {
+        props.children = children;
+      } else if (childrenLength > 1) {
+        var childArray = Array(childrenLength);
+
+        for (var i = 0; i < childrenLength; i++) {
+          childArray[i] = arguments[i + 3];
+        }
+
+        props.children = childArray;
+      }
+
+      return {
+        $$typeof: REACT_ELEMENT_TYPE,
+        type: type,
+        key: key === undefined ? null : '' + key,
+        ref: null,
+        props: props,
+        _owner: null
+      };
+    };
+  }();
+
+  var createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  var slicedToArray = function () {
+    function sliceIterator(arr, i) {
+      var _arr = [];
+      var _n = true;
+      var _d = false;
+      var _e = undefined;
+
+      try {
+        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+          _arr.push(_s.value);
+
+          if (i && _arr.length === i) break;
+        }
+      } catch (err) {
+        _d = true;
+        _e = err;
+      } finally {
+        try {
+          if (!_n && _i["return"]) _i["return"]();
+        } finally {
+          if (_d) throw _e;
+        }
+      }
+
+      return _arr;
+    }
+
+    return function (arr, i) {
+      if (Array.isArray(arr)) {
+        return arr;
+      } else if (Symbol.iterator in Object(arr)) {
+        return sliceIterator(arr, i);
+      } else {
+        throw new TypeError("Invalid attempt to destructure non-iterable instance");
+      }
+    };
+  }();
+
   var __checkers = {};
   var __defaultParamOfRule = {};
 
@@ -103,8 +202,10 @@
   }
 
   Validator.addChecker = function (name, checker) {
-    if ((typeof name === 'undefined' ? 'undefined' : babelHelpers_typeof(name)) === 'object') {
-      Object.assign(__checkers, name);
+    if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
+      for (var p in name) {
+        __checkers[p] = name[p];
+      }
       return;
     }
     __checkers[name] = checker;
@@ -161,7 +262,7 @@
         prop = prop.join(',');
       }
 
-      if ((typeof name === 'undefined' ? 'undefined' : babelHelpers_typeof(name)) === 'object') {
+      if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
         var map = name;
         for (var p in map) {
           this.addRule(prop, p, map[p]);
@@ -192,7 +293,7 @@
     },
 
     _addErrorTo: function _addErrorTo(prop, rule, error) {
-      if (arguments.length < 3 && (typeof rule === 'undefined' ? 'undefined' : babelHelpers_typeof(rule)) === 'object') {
+      if (arguments.length < 3 && (typeof rule === 'undefined' ? 'undefined' : _typeof(rule)) === 'object') {
         error = rule;
         for (var aRule in error) {
           this._addErrorTo(prop, aRule, error[aRule]);
@@ -262,7 +363,7 @@
     },
 
     validate: function validate(prop, callback, option) {
-      var propType = typeof prop === 'undefined' ? 'undefined' : babelHelpers_typeof(prop);
+      var propType = typeof prop === 'undefined' ? 'undefined' : _typeof(prop);
 
       if (propType === 'function') {
         option = callback;
@@ -273,7 +374,7 @@
         prop = callback = null;
       }
 
-      if (callback && (typeof callback === 'undefined' ? 'undefined' : babelHelpers_typeof(callback)) === 'object') {
+      if (callback && (typeof callback === 'undefined' ? 'undefined' : _typeof(callback)) === 'object') {
         option = callback;
         callback = null;
       }
@@ -529,7 +630,7 @@
 
       //是自定义的checker， rule name也是自定义的
       if (!checker && param) {
-        var pt = typeof param === 'undefined' ? 'undefined' : babelHelpers_typeof(param);
+        var pt = typeof param === 'undefined' ? 'undefined' : _typeof(param);
         if (pt === 'function') {
           checker = param;
           param = undefined;
@@ -633,7 +734,7 @@
       var source, key, srcValue, objValue;
 
       var isValidObj = function isValidObj(o) {
-        return o && (typeof o === 'undefined' ? 'undefined' : babelHelpers_typeof(o)) === 'object';
+        return o && (typeof o === 'undefined' ? 'undefined' : _typeof(o)) === 'object';
       };
 
       for (var i = 1; i < arguments.length; i++) {
@@ -690,7 +791,12 @@
       return currDict[key];
     },
     addLocale: function addLocale(locale, dict) {
-      localeDict[locale] = Object.assign({}, localeDict[locale], dict);
+      var currDict = localeDict[locale];
+      if (!currDict) currDict = localeDict[locale] = {};
+      for (var p in dict) {
+        currDict[p] = dict[p];
+      }
+
       this.setCurrLocale(locale);
     }
   };
@@ -1056,7 +1162,7 @@
 
     required: function required(value, option) {
       if (option === false) return;
-      if ((typeof option === 'undefined' ? 'undefined' : babelHelpers_typeof(option)) !== 'object') option = {};
+      if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) !== 'object') option = {};
 
       if (Array.isArray(value)) {
         return value && value.length > 0 ? true : option.message || getLocaleMsg('required:leastOne', 'should have at least one');
@@ -1066,7 +1172,7 @@
 
     chosed: function chosed(value, option) {
       if (option === false) return;
-      if ((typeof option === 'undefined' ? 'undefined' : babelHelpers_typeof(option)) !== 'object') option = {};
+      if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) !== 'object') option = {};
 
       return value != -1 ? true : option.message || getLocaleMsg('chosed', 'required');
     },

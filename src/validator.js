@@ -45,7 +45,9 @@ function Validator(rules, obj, propLabels) {
 
 Validator.addChecker = function(name, checker) {
   if (typeof name === 'object') {
-    Object.assign(__checkers, name)
+    for(let p in name) {
+      __checkers[p] = name[p]
+    }
     return
   }
   __checkers[name] = checker
