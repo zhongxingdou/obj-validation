@@ -39,7 +39,7 @@ EventObserver.prototype = {
     if (!typeObservers) return
 
     typeObservers.forEach(function (handler) {
-      let args = Array.from(arguments).slice(2)
+      let args = Array.from(arguments).slice(1)
       handler.apply(null, args)
     })
   }
