@@ -47,7 +47,7 @@
       if (!typeObservers) return;
 
       typeObservers.forEach(function (handler) {
-        var args = Array.from(arguments).slice(2);
+        var args = Array.from(arguments).slice(1);
         handler.apply(null, args);
       });
     }
