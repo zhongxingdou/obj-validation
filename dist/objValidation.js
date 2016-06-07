@@ -847,7 +847,7 @@
     this.validator = validator;
     this.option = option;
 
-    validator.onValidatedAll(function (isValid) {
+    validator.on('validated', function (isValid) {
       if (!isValid) {
         var invalidProps = validator.getInvalidProps();
         var alertMsges = [];
@@ -881,7 +881,7 @@
       }
     });
 
-    validator.onReset(function () {
+    validator.on('reset', function () {
       $('.has-error', self.form).removeClass('has-error');
       $('.' + self.errorElementCls, self.form).remove();
     });
