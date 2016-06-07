@@ -38,8 +38,8 @@ EventObserver.prototype = {
     var typeObservers = observers[eventType]
     if (!typeObservers) return
 
+    let args = Array.from(arguments).slice(1)
     typeObservers.forEach(function (handler) {
-      let args = Array.from(arguments).slice(1)
       handler.apply(null, args)
     })
   }
