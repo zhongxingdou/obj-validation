@@ -1063,11 +1063,18 @@
         }
       };
       vm._onValidatorReset = onReset;
-      validator.onReset(onReset);
+      validator.on('reset', onReset);
+      validator.on('validated', function (isValid) {
+        if (!isValid) {
+          props.forEach(function (prop) {
+            vm.$set('validateError.' + prop, validator.getErrors(prop));
+          });
+        }
+      });
     },
     beforeDestory: function beforeDestory() {
       if (!this.$validator) return;
-      this.$validator.unReset(this._onValidatorReset);
+      this.$validator.off('reset', this._onValidatorReset);
       this.$validator.setTarget(null);
     }
   };
