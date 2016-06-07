@@ -26,6 +26,16 @@
       typeObservers.push(handler);
     },
 
+    once: function once(eventType, handler) {
+      var self = this;
+      var wrap = function wrap() {
+        self.off(eventType, wrap);
+        handler.apply(null, arguments);
+      };
+
+      this.on(eventType, wrap);
+    },
+
     off: function off(eventType, handler) {
       if (!this._isValidEvent(eventType)) return;
 
@@ -34,9 +44,11 @@
       if (!typeObservers) return;
 
       var i = typeObservers.indexOf(handler);
-      if (i === -1) return;
+      if (i === -1) {
+        return;
+      }
 
-      typeObservers.splice(handler, i);
+      typeObservers.splice(i, 1);
     },
 
     fire: function fire(eventType) {
@@ -170,6 +182,7 @@
     var _eventObserver = this._eventObserver = new EventObserver(validEvent);
     this.on = _eventObserver.on.bind(_eventObserver);
     this.off = _eventObserver.off.bind(_eventObserver);
+    this.once = _eventObserver.once.bind(_eventObserver);
     this._fire = _eventObserver.fire.bind(_eventObserver);
 
     this.validateErrors = {};
@@ -403,7 +416,7 @@
       var self = this;
       self.reset();
 
-      if (callback) self._onceValidatedAll(callback);
+      if (callback) self.once('validated', callback);
 
       Object.keys(self.rules).forEach(function (prop) {
         self._validatePropExp(prop, null, option);
@@ -418,17 +431,6 @@
       } else {
         return 'pending';
       }
-    },
-
-    _onceValidatedAll: function _onceValidatedAll(observer) {
-      var self = this;
-
-      var proxy = function proxy() {
-        self.unValidated(proxy);
-        observer.apply(this, arguments);
-      };
-
-      self.onValidatedAll(proxy);
     },
 
     onPending: function onPending(startObserver, endObserver) {
