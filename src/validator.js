@@ -12,6 +12,7 @@ function Validator(rules, obj, propLabels) {
   var _eventObserver = this._eventObserver = new EventObserver(validEvent)
   this.on = _eventObserver.on.bind(_eventObserver)
   this.off = _eventObserver.off.bind(_eventObserver)
+  this.once = _eventObserver.once.bind(_eventObserver)
   this._fire = _eventObserver.fire.bind(_eventObserver)
 
   this.validateErrors = {}
@@ -245,7 +246,7 @@ var proto = {
     var self = this
     self.reset()
 
-    if (callback) self._onceValidatedAll(callback)
+    if (callback) self.once('validated', callback)
 
     Object.keys(self.rules).forEach(function(prop) {
       self._validatePropExp(prop, null, option)
@@ -260,17 +261,6 @@ var proto = {
     } else {
       return 'pending'
     }
-  },
-
-  _onceValidatedAll: function(observer) {
-    var self = this
-
-    var proxy = function() {
-      self.unValidated(proxy)
-      observer.apply(this, arguments)
-    }
-
-    self.onValidatedAll(proxy)
   },
 
   onPending: function(startObserver, endObserver) {

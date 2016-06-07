@@ -1,4 +1,4 @@
-function EventObserver(validEvent) {
+export default function EventObserver(validEvent) {
   this._observers = {}
   this._validEvent = validEvent
 }
@@ -18,6 +18,16 @@ EventObserver.prototype = {
     typeObservers.push(handler)
   },
 
+  once: function(eventType, handler) {
+    var self = this
+    var wrap = function () {
+      self.off(eventType, wrap)
+      handler.apply(null, arguments)
+    }
+
+    this.on(eventType, wrap)
+  },
+
   off: function (eventType, handler) {
     if (!this._isValidEvent(eventType)) return
 
@@ -26,9 +36,11 @@ EventObserver.prototype = {
     if (!typeObservers) return
 
     var i = typeObservers.indexOf(handler)
-    if (i === -1) return
+    if (i === -1) {
+      return
+    }
 
-    typeObservers.splice(handler, i)
+    typeObservers.splice(i, 1)
   },
 
   fire: function (eventType) {
@@ -38,11 +50,9 @@ EventObserver.prototype = {
     var typeObservers = observers[eventType]
     if (!typeObservers) return
 
-    let args = Array.from(arguments).slice(1)
+    var args = Array.from(arguments).slice(1)
     typeObservers.forEach(function (handler) {
       handler.apply(null, args)
     })
   }
 }
-
-export default EventObserver

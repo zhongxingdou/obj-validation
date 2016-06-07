@@ -394,7 +394,8 @@ describe('Validator', function() {
 
     it('onValidatedAll(observer)', function(done) {
       var spy = sinon.spy()
-      v.onValidatedAll(spy)
+      v.on('validated', spy)
+      v._eventObserver._observers['validated'].length.should.equal(1)
 
       v.setTarget({
         name: 'hal'
@@ -405,8 +406,12 @@ describe('Validator', function() {
 
       v.validate(function() {
         spy.calledWith(true).should.true
+        v._eventObserver._observers['validated'].length.should.equal(1)
+        v._eventObserver._observers['validated'][0].name.should.equal('proxy')
         done()
       })
+
+      v._eventObserver._observers['validated'].length.should.equal(2)
     })
   })
 
