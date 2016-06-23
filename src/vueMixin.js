@@ -70,7 +70,8 @@ export default {
     validator.on('validated', function (isValid) {
       if (!isValid) {
         props.forEach(function (prop) {
-          vm.$set('validateError.' + prop, validator.getErrors(prop))
+          vm.$set('validateError.' + prop, validator.getErrors(prop).join('\n'))
+          vm.$set('validateState.' + prop, validator.isPropValid(prop))
         })
       }
     })
