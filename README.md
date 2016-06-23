@@ -1,5 +1,8 @@
 # obj-validation
 
+## Document
+Visit [document](http://zhongxingdou.github.io/obj-validation/)
+
 ## Usage
 ```javascript
 var ObjValidation = require('obj-validation')
