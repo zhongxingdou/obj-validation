@@ -12,7 +12,7 @@
 
     可选，验证选项，参见 [ValidateOption](validateOption.md)
 
-## `.validate(prop, [callback], [validateOption])`
+## `.validate([prop], [callback], [validateOption])`
 
 验证目标对象的指定属性
 
@@ -20,11 +20,11 @@
 
 - prop: String
 
-    要验证的属性
+    可选，要验证的属性，如未提供，则验证所有规则
 
-- callback: Function (isValid : Boolean)
+- callback: Function (isValid : Boolean, errors: [String])
 
-    可选，验证完成后的回调，回调函数的参数 isValid 表验证是否通过
+    可选，验证完成后的回调，回调函数的参数 isValid 表验证是否通过，errors 表验证出错后的错误信息
 
 - validateOption: ValidateOption
 
