@@ -1,6 +1,7 @@
 var Validator = require("../dist/objValidation")
 var should = require('should')
 var sinon = require('sinon')
+var assert = require('better-assert')
 
 describe('Validator', function() {
   var v
@@ -254,7 +255,7 @@ describe('Validator', function() {
     })
 
     it('validate() use custom checker defined in option', function () {
-      spy = sinon.spy()
+      var spy = sinon.spy()
       v.addRule('p1', 'rule1', {
         p1: 2,
         checker: spy
@@ -412,6 +413,24 @@ describe('Validator', function() {
       })
 
       v._eventObserver._observers['validated'].length.should.equal(2)
+    })
+
+    it('invoke callback with valid result and errors', function () {
+      v.setTarget({name: 'hal.zhong'})
+      v.addRule('name', 'required', true)
+      let spy = sinon.spy()
+      v.validate('name', spy)
+      spy.calledWith(true, '').should.be.true
+
+      v.setTarget({name: ''})
+      let spy2 = sinon.spy()
+      v.validate('name', spy2)
+      spy2.calledWith(false, 'required').should.be.false
+      console.info(spy2.called)
+
+      let spy3 = sinon.spy()
+      v.validate(spy3)
+      spy3.calledWith(false, ['required']).should.be.true
     })
   })
 

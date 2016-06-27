@@ -58,7 +58,7 @@
       var typeObservers = observers[eventType];
       if (!typeObservers) return;
 
-      var args = Array.from(arguments).slice(1);
+      var args = Array.prototype.slice.call(arguments).slice(1);
       typeObservers.forEach(function (handler) {
         handler.apply(null, args);
       });
@@ -426,7 +426,7 @@
         var result = self.isValid();
 
         validateAllRunning = false;
-        self._fire('validated', result);
+        self._fire('validated', result, self.getErrors());
         return result;
       } else {
         return 'pending';
@@ -502,11 +502,11 @@
 
               if (validateAllRunning) {
                 validateAllRunning = false;
-                self._fire('validated', isValid);
+                self._fire('validated', isValid, self.getErrors());
               }
             }
 
-            if (callback) callback(self.isValid(p));
+            if (callback) callback(self.isValid(p), self.getErrors(p));
           }
         });
       };
@@ -585,12 +585,12 @@
         wrapCb = function wrapCb() {
           var isValid = self.isValid(prop);
           if (!isValid && !checkFully) {
-            return callback(isValid);
+            return callback(isValid, self.getErrors(prop));
           }
 
           len--;
           if (len === 0) {
-            callback(isValid);
+            callback(isValid, self.getErrors(prop));
           }
         };
       }
@@ -726,7 +726,7 @@
       }
 
       if (callback) {
-        callback(valid);
+        callback(valid, self.getErrors(prop));
       }
 
       return valid;
@@ -1110,10 +1110,15 @@
     return value !== undefined && value !== null && value !== '';
   }
 
+  function arrayFrom(arrayLike) {
+    return Array.prototype.slice.call(arrayLike);
+  }
+
   var util = {
     format: format$1,
     utf8Length: utf8Length$1,
-    hasValue: hasValue$1
+    hasValue: hasValue$1,
+    arrayFrom: arrayFrom
   };
 
   var hasValue = util.hasValue;
@@ -1129,7 +1134,7 @@
     var localeMsg = i18n.getLocaleString(rule);
     var msg = localeMsg || defaultMsg;
 
-    var params = Array.from(arguments).slice(2);
+    var params = util.arrayFrom(arguments).slice(2);
     params.unshift(msg);
 
     return util.format.apply(null, params);

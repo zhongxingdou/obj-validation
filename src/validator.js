@@ -256,7 +256,7 @@ var proto = {
       var result = self.isValid()
 
       validateAllRunning = false
-      self._fire('validated', result)
+      self._fire('validated', result, self.getErrors())
       return result
     } else {
       return 'pending'
@@ -332,11 +332,11 @@ var proto = {
 
               if (validateAllRunning) {
                 validateAllRunning = false
-                self._fire('validated', isValid)
+                self._fire('validated', isValid, self.getErrors())
               }
             }
 
-            if (callback) callback(self.isValid(p))
+            if (callback) callback(self.isValid(p), self.getErrors(p))
           }
         })
     }
@@ -415,12 +415,12 @@ var proto = {
       wrapCb = function() {
         var isValid = self.isValid(prop)
         if (!isValid && !checkFully) {
-          return callback(isValid)
+          return callback(isValid, self.getErrors(prop))
         }
 
         len--
         if (len === 0) {
-          callback(isValid)
+          callback(isValid, self.getErrors(prop))
         }
       }
     }
@@ -554,7 +554,7 @@ var proto = {
     }
 
     if (callback) {
-      callback(valid)
+      callback(valid, self.getErrors(prop))
     }
 
     return valid

@@ -1,11 +1,12 @@
 {
   "name": "obj-validation",
-  "version": "2.4.9",
+  "version": "2.4.10",
   "description": "javascript object validation",
   "main": "dist/objValidation.js",
   "directories": {
     "test": "test"
   },
+  "files": ["src", "dist"],
   "scripts": {
     "test": "mocha",
     "build": "rollup -c build/rollup.config.js",
@@ -18,7 +19,10 @@
   "author": "zhongxingdou@gmail.com",
   "license": "ISC",
   "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
     "babel-preset-es2015-rollup": "^1.1.1",
+    "babel-register": "^6.9.0",
+    "babelrc-rollup": "^1.1.0",
     "better-assert": "^1.0.2",
     "jquery": "^2.2.4",
     "rollup-plugin-babel": "^2.5.0",

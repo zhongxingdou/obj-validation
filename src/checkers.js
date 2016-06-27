@@ -14,7 +14,7 @@ function makeErrorMsg(rule, defaultMsg) {
   var localeMsg = i18n.getLocaleString(rule)
   var msg = localeMsg || defaultMsg
 
-  var params = Array.from(arguments).slice(2)
+  var params = util.arrayFrom(arguments).slice(2)
   params.unshift(msg)
 
   return util.format.apply(null, params)

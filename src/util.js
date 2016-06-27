@@ -26,8 +26,13 @@ function hasValue(value) {
   return value !== undefined && value !== null && value !== ''
 }
 
+function arrayFrom(arrayLike) {
+  return Array.prototype.slice.call(arrayLike)
+}
+
 export default {
   format: format,
   utf8Length: utf8Length,
-  hasValue: hasValue
+  hasValue: hasValue,
+  arrayFrom: arrayFrom
 }
