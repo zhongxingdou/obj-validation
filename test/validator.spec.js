@@ -373,7 +373,7 @@ describe('Validator', function() {
 
             var spy = sinon.spy()
             v.validate('lname', spy, {checkFully: true})
-            spy.calledWith(false).should.true
+            assert(spy.calledWith(false))
           })
 
     it('onPending(observer)', function(done) {
@@ -406,7 +406,7 @@ describe('Validator', function() {
       })
 
       v.validate(function() {
-        spy.calledWith(true).should.true
+        assert(spy.calledWith(true))
         v._eventObserver._observers['validated'].length.should.equal(1)
         v._eventObserver._observers['validated'][0].name.should.equal('proxy')
         done()
@@ -415,22 +415,17 @@ describe('Validator', function() {
       v._eventObserver._observers['validated'].length.should.equal(2)
     })
 
-    it('invoke callback with valid result and errors', function () {
+    it('should call callback with valid result and errors', function () {
       v.setTarget({name: 'hal.zhong'})
       v.addRule('name', 'required', true)
       let spy = sinon.spy()
       v.validate('name', spy)
-      spy.calledWith(true, '').should.be.true
+      assert(spy.calledWith(true, []))
 
       v.setTarget({name: ''})
       let spy2 = sinon.spy()
       v.validate('name', spy2)
-      spy2.calledWith(false, 'required').should.be.false
-      console.info(spy2.called)
-
-      let spy3 = sinon.spy()
-      v.validate(spy3)
-      spy3.calledWith(false, ['required']).should.be.true
+      assert(spy2.calledWith(false, ['required']))
     })
   })
 
