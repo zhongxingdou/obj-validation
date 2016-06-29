@@ -12,6 +12,7 @@ import $ from 'jquery'
 //   dataKey: 'email' // 可选，重命名当前验证字段发送给后台时使用的名字
 //   data: {} // 可选，验证请求时要附带的其他数据
 //   ajax: {} // 可选，验证请求的其他 ajax option，上面的 url 和 data 的优先级高于这里的
+//   message: '错误消息' // 如果请求未返回错误消息，则使用这里的
 // }
 ObjValidation.addChecker('remote', function (value, option, callback, props, labels) {
   if (typeof option === 'string') option = {url: option}
