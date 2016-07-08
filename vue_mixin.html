@@ -1,0 +1,684 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <title>配合 Vue 使用 · GitBook</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.0.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="i18n.html" />
+    
+    
+    <link rel="prev" href="basic.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="installation.html">
+            
+                <a href="installation.html">
+            
+                    
+                    安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="basic.html">
+            
+                <a href="basic.html">
+            
+                    
+                    基本用法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4" data-path="vue_mixin.html">
+            
+                <a href="vue_mixin.html">
+            
+                    
+                    配合 Vue 使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="i18n.html">
+            
+                <a href="i18n.html">
+            
+                    
+                    多语言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="rule_checker.html">
+            
+                <a href="rule_checker.html">
+            
+                    
+                    验证规则和验证函数
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="define_rule.html">
+            
+                <a href="define_rule.html">
+            
+                    
+                    声明验证规则
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="custom_checker.html">
+            
+                <a href="custom_checker.html">
+            
+                    
+                    自定义验证函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="api/global.html">
+            
+                <a href="api/global.html">
+            
+                    
+                    全局对象 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="api/instance_props.html">
+            
+                <a href="api/instance_props.html">
+            
+                    
+                    实例属性 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="api/instance_events.html">
+            
+                <a href="api/instance_events.html">
+            
+                    
+                    实例事件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    实例方法 API
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="api/setTarget.html">
+            
+                <a href="api/setTarget.html">
+            
+                    
+                    .setTarget()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="api/addRule.html">
+            
+                <a href="api/addRule.html">
+            
+                    
+                    .addRule()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="api/setDefaultRuleOption.html">
+            
+                <a href="api/setDefaultRuleOption.html">
+            
+                    
+                    .setDefaultRuleOption()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="api/validate.html">
+            
+                <a href="api/validate.html">
+            
+                    
+                    .validate()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.5" data-path="api/validateOption.html">
+            
+                <a href="api/validateOption.html">
+            
+                    
+                    ValidateOption
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.6" data-path="api/isValid.html">
+            
+                <a href="api/isValid.html">
+            
+                    
+                    .isValid()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.7" data-path="api/getErrors.html">
+            
+                <a href="api/getErrors.html">
+            
+                    
+                    .getErrors()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.8" data-path="api/getInvalidProps.html">
+            
+                <a href="api/getInvalidProps.html">
+            
+                    
+                    .getInvalidProps()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.9" data-path="api/getPropValue.html">
+            
+                <a href="api/getPropValue.html">
+            
+                    
+                    .getPropValue()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.10" data-path="api/getRelatedProps.html">
+            
+                <a href="api/getRelatedProps.html">
+            
+                    
+                    .getRelatedProps()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.11" data-path="api/isPropNeedCheck.html">
+            
+                <a href="api/isPropNeedCheck.html">
+            
+                    
+                    .isPropNeedCheck()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.12" data-path="api/isPropValid.html">
+            
+                <a href="api/isPropValid.html">
+            
+                    
+                    .isPropValid()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.13" data-path="api/getPropErrors.html">
+            
+                <a href="api/getPropErrors.html">
+            
+                    
+                    .getPropErrors()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.14" data-path="api/reset.html">
+            
+                <a href="api/reset.html">
+            
+                    
+                    .reset()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.15" data-path="api/on.html">
+            
+                <a href="api/on.html">
+            
+                    
+                    .on()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.16" data-path="api/off.html">
+            
+                <a href="api/off.html">
+            
+                    
+                    .off()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.17" data-path="api/onPending.html">
+            
+                <a href="api/onPending.html">
+            
+                    
+                    .onPending()
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >配合 Vue 使用</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x914D;&#x5408;-vue-&#x4F7F;&#x7528;">&#x914D;&#x5408; Vue &#x4F7F;&#x7528;</h1>
+<p>Obj-Validation &#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A; mixin &#x6A21;&#x5757;&#x8BA9; Vue &#x7684; component &#x53EF;&#x4EE5;&#x5F88;&#x65B9;&#x4FBF;&#x7684;&#x4F7F;&#x7528;&#x5B83;&#x3002;Vue &#x7EC4;&#x4EF6;&#x53EF;&#x5728;&#x7EC4;&#x4EF6; option &#x4E2D;&#x58F0;&#x660E; <strong>validate</strong> &#x9879;&#x6765;&#x914D;&#x7F6E; mixin &#x6A21;&#x5757;&#x7684;&#x884C;&#x4E3A;&#x3002;&#x5728; Vue &#x7684;&#x7EC4;&#x4EF6;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x9A8C;&#x8BC1;&#x5668;&#x5B9E;&#x4F8B;&#x7684;&#x65B9;&#x6CD5;&#x6765;&#x5B8C;&#x6210;&#x6570;&#x636E;&#x9A8C;&#x8BC1;&#x3002;&#x53E6;&#x5916;&#xFF0C;mxin &#x6A21;&#x5757;&#x58F0;&#x660E;&#x4E86; <strong>validateError</strong> &#x548C; <strong>validateState</strong> &#x8FD9;&#x4E24;&#x4E2A;&#x6570;&#x636E;&#x5BF9;&#x8C61;&#x7528;&#x4E8E;&#x4FDD;&#x5B58;&#x9A8C;&#x8BC1;&#x9519;&#x8BEF;&#x6D88;&#x606F;&#x548C;&#x9A8C;&#x8BC1;&#x72B6;&#x6001;&#xFF0C;&#x5B83;&#x4EEC;&#x53EF;&#x4EE5;&#x5F88;&#x65B9;&#x4FBF;&#x7684;&#x5F15;&#x7528;&#x4EE5;&#x53CA;&#x5728;&#x7EC4;&#x4EF6;&#x6A21;&#x677F;&#x4E2D;&#x7ED1;&#x5B9A;&#x663E;&#x793A;&#x3002;</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> ObjValidation <span class="hljs-keyword">from</span>  <span class="hljs-string">&apos;obj-validation&apos;</span>
+
+<span class="hljs-keyword">new</span> Vue({
+  el: <span class="hljs-string">&apos;#ObjValidationDemo&apos;</span>,
+  mixins: [ObjValidation.vueMixin],
+  validate: {
+    <span class="hljs-comment">// &#x9A8C;&#x8BC1;&#x89C4;&#x5219;</span>
+    rules: {
+        name: {
+            length:  <span class="hljs-number">28</span>,
+            pattern: <span class="hljs-regexp">/.*\..*/</span>
+        },
+        age: {
+            type: <span class="hljs-built_in">Number</span>,
+            max: <span class="hljs-number">120</span>
+        }
+    },
+    <span class="hljs-comment">// &#x8981;&#x9A8C;&#x8BC1;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; vm.$get(&apos;user&apos;) &#x83B7;&#x53D6;</span>
+    target: <span class="hljs-string">&apos;user&apos;</span>,
+    <span class="hljs-comment">// &#x53EF;&#x9009;&#x9879;&#xFF0C;&#x53EA;&#x76D1;&#x542C; target &#x7684;&#x6307;&#x5B9A;&#x6210;&#x5458;</span>
+    targetProps: [<span class="hljs-string">&apos;age&apos;</span>, <span class="hljs-string">&apos;name&apos;</span>],
+    <span class="hljs-comment">// &#x53EF;&#x9009;&#x9879;&#xFF0C;&#x63D0;&#x4F9B;&#x5B57;&#x6BB5;&#x6807;&#x7B7E;&#xFF0C;&#x65B9;&#x4FBF;&#x5C55;&#x793A;&#x7ED9;&#x7528;&#x6237;&#xFF08;&#x5B57;&#x6BB5;&#x540D;&#x4E0D;&#x5BB9;&#x6613;&#x7406;&#x89E3;&#xFF09;</span>
+    label: {
+      name: <span class="hljs-string">&apos;&#x7528;&#x6237;&#x540D;&apos;</span>,
+      age: <span class="hljs-string">&apos;&#x5E74;&#x9F84;&apos;</span>
+    }
+  },
+  data: {
+    user: {
+      name: <span class="hljs-string">&apos;&apos;</span>,
+      age: <span class="hljs-number">1</span>
+    }
+  },
+  computed: {
+    isInvalid () {
+      <span class="hljs-keyword">let</span> state = <span class="hljs-keyword">this</span>.validateState
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(state).some(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">prop</span>) </span>{
+        <span class="hljs-keyword">return</span> state[prop] === <span class="hljs-literal">false</span>
+      })
+    }
+  },
+  methods: {
+    submit: () {
+      <span class="hljs-keyword">this</span>.$validator.validate(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">isValid</span>)</span>{
+        <span class="hljs-keyword">if</span>(isValid) {
+          <span class="hljs-comment">// submit form</span>
+        }
+      })
+    }
+})
+</code></pre>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;ObjValidationDemo&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;validateForm&quot;</span> <span class="hljs-attr">v-cloak</span> @<span class="hljs-attr">submit.prevent</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;name&quot;</span>&gt;</span>Name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;user.name&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;help-block&quot;</span>&gt;</span>{{ validateError.name }}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;name&quot;</span>&gt;</span>Age<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;user.age&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;help-block&quot;</span>&gt;</span>{{ validateError.age }}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">:disabled</span>=<span class="hljs-string">&quot;isInValid&quot;</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="basic.html" class="navigation navigation-prev " aria-label="Previous page: 基本用法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="i18n.html" class="navigation navigation-next " aria-label="Next page: 多语言">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"配合 Vue 使用","level":"1.4","depth":1,"next":{"title":"多语言","level":"1.5","depth":1,"path":"i18n.md","ref":"i18n.md","articles":[]},"previous":{"title":"基本用法","level":"1.3","depth":1,"path":"basic.md","ref":"basic.md","articles":[]},"dir":"ltr"},"config":{"plugins":["edit-link","github"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"edit-link":{"base":"https://github.com/zhongxingdou/obj-validation/tree/master/docs","label":"Edit This Page"},"github":{"url":"https://github.com/zhongxingdou/obj-validation/"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000},"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"links":{"sharing":{"facebook":false,"twitter":false}},"gitbook":"3.x.x"},"file":{"path":"vue_mixin.md","mtime":"2016-06-03T07:51:21.000Z","type":"markdown"},"gitbook":{"version":"3.0.3","time":"2016-07-08T03:38:30.364Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/buttons.js"></script>
+        
+    
+
+    </body>
+</html>
+

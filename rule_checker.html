@@ -1,0 +1,680 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <title>验证规则和验证函数 · GitBook</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.0.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="define_rule.html" />
+    
+    
+    <link rel="prev" href="i18n.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="installation.html">
+            
+                <a href="installation.html">
+            
+                    
+                    安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="basic.html">
+            
+                <a href="basic.html">
+            
+                    
+                    基本用法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="vue_mixin.html">
+            
+                <a href="vue_mixin.html">
+            
+                    
+                    配合 Vue 使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="i18n.html">
+            
+                <a href="i18n.html">
+            
+                    
+                    多语言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6" data-path="rule_checker.html">
+            
+                <a href="rule_checker.html">
+            
+                    
+                    验证规则和验证函数
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="define_rule.html">
+            
+                <a href="define_rule.html">
+            
+                    
+                    声明验证规则
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="custom_checker.html">
+            
+                <a href="custom_checker.html">
+            
+                    
+                    自定义验证函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="api/global.html">
+            
+                <a href="api/global.html">
+            
+                    
+                    全局对象 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="api/instance_props.html">
+            
+                <a href="api/instance_props.html">
+            
+                    
+                    实例属性 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="api/instance_events.html">
+            
+                <a href="api/instance_events.html">
+            
+                    
+                    实例事件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    实例方法 API
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="api/setTarget.html">
+            
+                <a href="api/setTarget.html">
+            
+                    
+                    .setTarget()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="api/addRule.html">
+            
+                <a href="api/addRule.html">
+            
+                    
+                    .addRule()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="api/setDefaultRuleOption.html">
+            
+                <a href="api/setDefaultRuleOption.html">
+            
+                    
+                    .setDefaultRuleOption()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="api/validate.html">
+            
+                <a href="api/validate.html">
+            
+                    
+                    .validate()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.5" data-path="api/validateOption.html">
+            
+                <a href="api/validateOption.html">
+            
+                    
+                    ValidateOption
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.6" data-path="api/isValid.html">
+            
+                <a href="api/isValid.html">
+            
+                    
+                    .isValid()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.7" data-path="api/getErrors.html">
+            
+                <a href="api/getErrors.html">
+            
+                    
+                    .getErrors()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.8" data-path="api/getInvalidProps.html">
+            
+                <a href="api/getInvalidProps.html">
+            
+                    
+                    .getInvalidProps()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.9" data-path="api/getPropValue.html">
+            
+                <a href="api/getPropValue.html">
+            
+                    
+                    .getPropValue()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.10" data-path="api/getRelatedProps.html">
+            
+                <a href="api/getRelatedProps.html">
+            
+                    
+                    .getRelatedProps()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.11" data-path="api/isPropNeedCheck.html">
+            
+                <a href="api/isPropNeedCheck.html">
+            
+                    
+                    .isPropNeedCheck()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.12" data-path="api/isPropValid.html">
+            
+                <a href="api/isPropValid.html">
+            
+                    
+                    .isPropValid()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.13" data-path="api/getPropErrors.html">
+            
+                <a href="api/getPropErrors.html">
+            
+                    
+                    .getPropErrors()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.14" data-path="api/reset.html">
+            
+                <a href="api/reset.html">
+            
+                    
+                    .reset()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.15" data-path="api/on.html">
+            
+                <a href="api/on.html">
+            
+                    
+                    .on()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.16" data-path="api/off.html">
+            
+                <a href="api/off.html">
+            
+                    
+                    .off()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.17" data-path="api/onPending.html">
+            
+                <a href="api/onPending.html">
+            
+                    
+                    .onPending()
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >验证规则和验证函数</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x9A8C;&#x8BC1;&#x89C4;&#x5219;&#x548C;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;">&#x9A8C;&#x8BC1;&#x89C4;&#x5219;&#x548C;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;</h1>
+<h2 id="&#x9A8C;&#x8BC1;&#x89C4;&#x5219;">&#x9A8C;&#x8BC1;&#x89C4;&#x5219;</h2>
+<p>&#x9A8C;&#x8BC1;&#x89C4;&#x5219; = &#x5BF9;&#x8C61;&#x5C5E;&#x6027;&#x540D; + &#x89C4;&#x5219;&#x540D; + &#x89C4;&#x5219;&#x9009;&#x9879;</p>
+<h3 id="&#x5BF9;&#x8C61;&#x5C5E;&#x6027;&#x540D;">&#x5BF9;&#x8C61;&#x5C5E;&#x6027;&#x540D;</h3>
+<p>&#x6307;&#x5F53;&#x524D;&#x89C4;&#x5219;&#x8981;&#x9A8C;&#x8BC1;&#x7684;&#x5BF9;&#x8C61;&#x5C5E;&#x6027;&#x3002;&#x5982;&#x4E00;&#x4E2A;&#x89C4;&#x5219;&#x8981;&#x540C;&#x65F6;&#x9A8C;&#x8BC1;&#x591A;&#x4E2A;&#x5C5E;&#x6027;&#xFF0C;&#x5219;&#x7528; &apos;,&apos; &#x5206;&#x9694;&#x5C5E;&#x6027;&#x540D;&#xFF0C;&#x5982; &apos;firstName,lastName&apos;</p>
+<h3 id="&#x89C4;&#x5219;&#x540D;">&#x89C4;&#x5219;&#x540D;</h3>
+<p>&#x901A;&#x8FC7;&#x89C4;&#x5219;&#x540D;&#x627E;&#x5230;&#x5168;&#x5C40;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x3002;&#x5982;&#x679C;&#x662F;&#x81EA;&#x5B9A;&#x4E49;&#x9A8C;&#x8BC1;&#x89C4;&#x5219;&#xFF0C;&#x5219;&#x662F;&#x8BE5;&#x89C4;&#x5219;&#x7684;&#x552F;&#x4E00; Key&#xFF0C;&#x8D77;&#x5230;&#x533A;&#x522B;&#x5176;&#x4ED6;&#x9A8C;&#x8BC1;&#x89C4;&#x5219;&#x7684;&#x4F5C;&#x7528;&#x3002;</p>
+<h3 id="&#x89C4;&#x5219;&#x9009;&#x9879;">&#x89C4;&#x5219;&#x9009;&#x9879;</h3>
+<p>&#x63D0;&#x4F9B;&#x7ED9;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x4F7F;&#x7528;&#xFF0C;&#x4E3A;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x63D0;&#x4F9B;&#x9664;&#x5C5E;&#x6027;&#x503C;&#x5916;&#x7684;&#x5176;&#x4ED6;&#x53C2;&#x6570;&#xFF0C;&#x8BA9;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x66F4;&#x901A;&#x7528;&#x3002;</p>
+<p>&#x89C4;&#x5219;&#x9009;&#x9879;&#x7684;&#x7C7B;&#x578B;&#x4E3A; Object &#x6216;&#x5176;&#x4ED6;&#x7C7B;&#x578B;&#x3002;&#x4E3A;&#x5176;&#x4ED6;&#x7C7B;&#x578B;&#x65F6;&#xFF0C;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x5219;&#x628A;&#x5B83;&#x8BBE;&#x4E3A;&#x9009;&#x9879;&#x6210;&#x5458;&#x4E2D;&#x9ED8;&#x8BA4;&#x9879;&#x7684;&#x503C;&#x3002;&#x6B64;&#x9ED8;&#x8BA4;&#x9879;&#x5F80;&#x5F80;&#x662F;&#x6700;&#x7ECF;&#x5E38;&#x4F7F;&#x7528;&#x7684;&#x5FC5;&#x987B;&#x9009;&#x9879;&#x3002;&#x4E3A;&#x5176;&#x4ED6;&#x7C7B;&#x578B;&#x65F6;&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x60C5;&#x51B5;&#x5C31;&#x662F;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x53EA;&#x6709;&#x5355;&#x4E00;&#x9009;&#x9879;&#xFF0C;&#x5982; required &#x9A8C;&#x8BC1;&#x89C4;&#x5219;&#x3002;</p>
+<p>&#x89C4;&#x5219;&#x9009;&#x9879;&#x53EF;&#x8BBE;&#x7F6E;&#x5168;&#x5C40;&#x9ED8;&#x8BA4;&#x503C;&#x3002;</p>
+<h3 id="&#x9A8C;&#x8BC1;&#x89C4;&#x5219;&#x7684;&#x793A;&#x4F8B;">&#x9A8C;&#x8BC1;&#x89C4;&#x5219;&#x7684;&#x793A;&#x4F8B;</h3>
+<pre><code class="lang-json"><span class="hljs-keyword">let</span> userRules = {
+  name: {
+    required: <span class="hljs-literal">true</span>,
+    length: {
+      min: <span class="hljs-number">5</span>,
+      max: <span class="hljs-number">20</span>
+    },
+    <span class="hljs-comment">// &#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x89C4;&#x5219;&#x540D;&#x548C;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;</span>
+    englishName: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) </span>{
+      <span class="hljs-keyword">const</span> pattern = <span class="hljs-regexp">/\w+\.\w+/</span>
+      <span class="hljs-keyword">return</span> pattern.test(value) || <span class="hljs-string">&apos;Invalid format. format should like Jim.Green&apos;</span>
+    }
+  }
+}
+</code></pre>
+<h2 id="&#x9A8C;&#x8BC1;&#x51FD;&#x6570;">&#x9A8C;&#x8BC1;&#x51FD;&#x6570;</h2>
+<p>&#x6267;&#x884C;&#x9A8C;&#x8BC1;&#x7684;&#x4E3B;&#x4F53;&#xFF0C;&#x5177;&#x6709;&#x7EDF;&#x4E00;&#x7684;&#x7B7E;&#x540D; function (value, option, callback, props, labels) : Boolean | String</p>
+<h2 id="&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x7684;&#x7B7E;&#x540D;">&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x7684;&#x7B7E;&#x540D;</h2>
+<h3 id="&#x5F62;&#x5F0F;&#x53C2;&#x6570;">&#x5F62;&#x5F0F;&#x53C2;&#x6570;</h3>
+<ul>
+<li><p>value: Object | [Object]</p>
+<p>&#x9A8C;&#x8BC1;&#x5C5E;&#x6027;&#x7684;&#x503C;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x7EC4;&#x5408;&#x5C5E;&#x6027;&#x9A8C;&#x8BC1;&#xFF08;&#x5982;&apos;firstName,lastName&apos;&#xFF09;&#xFF0C;&#x5219;&#x4E3A;&#x5C5E;&#x6027;&#x503C;&#x6570;&#x7EC4;</p>
+</li>
+<li><p>option: Object</p>
+<p>&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x63D0;&#x4F9B;&#x7684;&#x9009;&#x9879;&#xFF0C;&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x9664;&#x5C5E;&#x6027;&#x503C;&#x5916;&#x7684;&#x5176;&#x4ED6;&#x53C2;&#x6570;</p>
+</li>
+<li><p>callback: Function (result: Boolean | String)</p>
+<p>&#x5F02;&#x6B65;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x7684;&#x56DE;&#x8C03;&#xFF0C;&#x5F62;&#x5F0F;&#x53C2;&#x6570;&#x7684;&#x610F;&#x4E49;&#x540C;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;</p>
+</li>
+<li><p>props: [String]</p>
+<p>&#x5C5E;&#x6027;&#x540D;&#xFF0C;&#x53EF;&#x7528;&#x4E8E;&#x5F02;&#x6B65;&#x9A8C;&#x8BC1;&#x65F6;&#x4F20;&#x9012;&#x5C5E;&#x6027;&#x503C;&#x65F6;&#x6307;&#x5B9A;&#x5C5E;&#x6027;&#x540D;</p>
+</li>
+<li><p>labels: [String]</p>
+<p>&#x5C5E;&#x6027;&#x6807;&#x7B7E;&#xFF0C;&#x4E00;&#x822C;&#x7528;&#x4E8E;&#x544A;&#x8BC9;&#x7528;&#x6237;&#x54EA;&#x4E2A;&#x5C5E;&#x6027;&#x51FA;&#x9519;</p>
+</li>
+</ul>
+<h3 id="&#x8FD4;&#x56DE;&#x503C;">&#x8FD4;&#x56DE;&#x503C;</h3>
+<ul>
+<li><p>&#x503C;&#x7C7B;&#x578B;&#x4E3A; Boolean</p>
+<p>&#x53EA;&#x80FD;&#x4E3A; true &#x503C;&#xFF0C;&#x8868;&#x9A8C;&#x8BC1;&#x901A;&#x8FC7;&#xFF0C;&#x65E0;&#x9519;&#x8BEF;</p>
+</li>
+<li><p>&#x503C;&#x7C7B;&#x578B;&#x4E3A; String</p>
+<p>&#x9A8C;&#x8BC1;&#x5931;&#x8D25;&#xFF0C;&#x8868;&#x9519;&#x8BEF;&#x6D88;&#x606F;&#xFF0C;&#x82F1;&#x6587;&#x60C5;&#x51B5;&#x4E0B;&#x5EFA;&#x8BAE;&#x683C;&#x5F0F;&#x4E3A;&#x9996;&#x5355;&#x8BCD;&#x9996;&#x5B57;&#x6BCD;&#x5927;&#x5199;</p>
+</li>
+<li><p>&#x5F02;&#x6B65;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x59CB;&#x7EC8;&#x4E3A; &apos;pending&apos;</p>
+</li>
+</ul>
+<h3 id="&#x5F02;&#x6B65;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;">&#x5F02;&#x6B65;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;</h3>
+<p>&#x5F02;&#x6B65;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x7684;&#x9A8C;&#x8BC1;&#x7ED3;&#x679C;&#x4E0D;&#x80FD;&#x5728;&#x6267;&#x884C;&#x7ED3;&#x675F;&#x65F6;&#x7ACB;&#x5373;&#x8FD4;&#x56DE;&#xFF0C;&#x5B83;&#x7684;&#x9A8C;&#x8BC1;&#x7ED3;&#x679C;&#x4EE5;&#x56DE;&#x8C03;&#x7684;&#x5F62;&#x5F0F;&#x8FD4;&#x56DE;&#x3002;
+Obj-Validation &#x8981;&#x6C42;&#x5F02;&#x6B65;&#x89C4;&#x5219;&#x7684;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x603B;&#x662F;&#x5B57;&#x7B26;&#x4E32; &apos;pending&apos;&#x3002;</p>
+<p>&#x5E38;&#x89C1;&#x7684;&#x5F02;&#x6B65;&#x9A8C;&#x8BC1;&#x89C4;&#x5219;&#x6709;&#x8FDC;&#x7A0B;&#x9A8C;&#x8BC1;&#xFF0C;&#x5982;&#x8FDC;&#x7A0B;&#x9A8C;&#x8BC1;&#x7528;&#x6237;&#x6CE8;&#x518C;&#x90AE;&#x7BB1;&#x662F;&#x5426;&#x552F;&#x4E00;&#x3002;</p>
+<h3 id="&#x5168;&#x5C40;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;">&#x5168;&#x5C40;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;</h3>
+<p>&#x5168;&#x5C40;&#x9A8C;&#x8BC1;&#x89C4;&#x5219;&#x53EF;&#x5728;&#x4EFB;&#x4F55;&#x89C4;&#x5219;&#x58F0;&#x660E;&#x4E2D;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#xFF0C;&#x5B83;&#x901A;&#x8FC7; <a href="api/global.html">ObjValidation.addChecker()</a> &#x6DFB;&#x52A0;&#x3002;</p>
+<h3 id="&#x5C40;&#x90E8;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;">&#x5C40;&#x90E8;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;</h3>
+<p>&#x5C40;&#x90E8;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x662F;&#x6307;&#x5728;&#x58F0;&#x660E;&#x9A8C;&#x8BC1;&#x89C4;&#x5219;&#x65F6;&#x76F4;&#x63A5;&#x6307;&#x5B9A;&#x7684;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#xFF0C;&#x5B83;&#x7684;&#x7B7E;&#x540D;&#x5E94;&#x548C;&#x5168;&#x5C40;&#x9A8C;&#x8BC1;&#x51FD;&#x6570;&#x4E00;&#x81F4;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="i18n.html" class="navigation navigation-prev " aria-label="Previous page: 多语言">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="define_rule.html" class="navigation navigation-next " aria-label="Next page: 声明验证规则">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"验证规则和验证函数","level":"1.6","depth":1,"next":{"title":"声明验证规则","level":"1.6.1","depth":2,"path":"define_rule.md","ref":"define_rule.md","articles":[]},"previous":{"title":"多语言","level":"1.5","depth":1,"path":"i18n.md","ref":"i18n.md","articles":[]},"dir":"ltr"},"config":{"plugins":["edit-link","github"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"edit-link":{"base":"https://github.com/zhongxingdou/obj-validation/tree/master/docs","label":"Edit This Page"},"github":{"url":"https://github.com/zhongxingdou/obj-validation/"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000},"sharing":{"facebook":false,"twitter":false,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"links":{"sharing":{"facebook":false,"twitter":false}},"gitbook":"3.x.x"},"file":{"path":"rule_checker.md","mtime":"2016-06-06T13:02:49.000Z","type":"markdown"},"gitbook":{"version":"3.0.3","time":"2016-07-08T03:38:30.364Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/buttons.js"></script>
+        
+    
+
+    </body>
+</html>
+
