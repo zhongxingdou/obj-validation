@@ -153,4 +153,60 @@ describe('checkers', function() {
 
     v.validate()
   })
+
+  it('length', function () {
+    var user = {
+      name: 'hal.zhong',
+      father: 'father.zhong'
+    }
+
+    v.setTarget(user)
+
+    v.addRule('name', 'length', 8)
+    assert(!v.validate())
+
+    user.name = 'hal'
+    assert(v.validate())
+
+    v.addRule('father', 'length', {
+      min: 3,
+      max: 9
+    })
+    assert(!v.validate())
+
+    user.father = 'father'
+    assert(v.validate())
+  })
+
+  it('pattern', function () {
+    var user = {
+      name: 'hal.zhong'
+    }
+
+    v.setTarget(user)
+
+    v.addRule('name', 'pattern', /\w+\.+\w+/)
+    assert(v.validate())
+
+    user.name = 'hal'
+    assert(!v.validate())
+    assert(v.getErrors('name')[0] === 'invalid format')
+  })
+
+  it('time', function () {
+    var obj = {
+      ctime: '13:44'
+    }
+    v.setTarget(obj)
+
+    v.addRule('ctime', 'time')
+    assert(v.validate())
+
+    obj.ctime = '13:60'
+    assert(!v.validate())
+
+    obj.ctime = '24:00'
+    assert(!v.validate())
+    assert(v.getErrors('ctime')[0] === 'should between 00:00 and 23:59')
+  })
 })
