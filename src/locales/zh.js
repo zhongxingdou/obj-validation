@@ -6,6 +6,7 @@ export default {
   depends: '{0}依赖{1}，请先填写{1}',
   uniq: '你输入的内容已存在，此项必须唯一',
   required: '这是必填字段',
+  'required:array': '请至少输入一项',
   chosed: '必选项',
   email: '请输入有效的电子邮件地址',
   url: '请输入有效的网址',

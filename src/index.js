@@ -16,6 +16,10 @@ ObjValidation.addChecker(checkers)
 // i18n
 import zhLocales from './locales/zh'
 i18n.addLocale('zh', zhLocales)
+
+import enLocales from './locales/en'
+i18n.addLocale('en', enLocales)
+
 i18n.setCurrLocale('en')
 
 export default ObjValidation
