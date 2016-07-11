@@ -1125,28 +1125,30 @@
   var utf8Length = util.utf8Length;
   var format = util.format;
 
-  function getLocaleMsg(rule, defaultMsg) {
-    var localeMsg = i18n.getLocaleString(rule);
-    return localeMsg || defaultMsg;
-  }
+  function resultMaker(option, msgKey) {
+    return function (valid) {
+      if (valid) return valid;
+      if (option && option.message) return option.message;
 
-  function makeErrorMsg(rule, defaultMsg) {
-    var localeMsg = i18n.getLocaleString(rule);
-    var msg = localeMsg || defaultMsg;
+      var msg = i18n.getLocaleString(msgKey);
 
-    var params = util.arrayFrom(arguments).slice(2);
-    params.unshift(msg);
+      if (arguments.length <= 1) {
+        return msg;
+      }
 
-    return util.format.apply(null, params);
+      var params = util.arrayFrom(arguments).slice(1);
+      params.unshift(msg);
+      return util.format.apply(null, params);
+    };
   }
 
   var checkers = {
     depends: function depends(value, option, callback, props, labels) {
-      var dependsFilled = value.slice(1).every(function (v) {
+      var valid = value.slice(1).every(function (v) {
         return hasValue(v);
       });
 
-      return dependsFilled || option.message || makeErrorMsg('depends', '{0} depends {1}', labels[0], labels.slice(1).join(' '));
+      return resultMaker(option, 'depends')(valid, labels[0], labels.slice(1).join(' '));
     },
 
     uniq: function uniq(value, option) {
@@ -1172,84 +1174,80 @@
         }
       }
 
-      return !exists || option.message || getLocaleMsg('uniq', 'should be unique');
+      return resultMaker(option, 'uniq')(!exists);
     },
 
     required: function required(value, option) {
-      if (option === false) return;
-      if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) !== 'object') option = {};
+      var m = resultMaker(option, 'required');
+
+      if (!hasValue(value)) return m(false);
 
       if (Array.isArray(value)) {
-        return value && value.length > 0 ? true : option.message || getLocaleMsg('required:leastOne', 'should have at least one');
+        var m2 = resultMaker(option, 'required:array');
+        return m2(value && value.length > 0);
       }
-      return value.trim().length > 0 ? true : option.message || getLocaleMsg('required', 'required');
+
+      return m(value.trim().length > 0);
     },
 
     chosed: function chosed(value, option) {
-      if (option === false) return;
-      if ((typeof option === 'undefined' ? 'undefined' : _typeof(option)) !== 'object') option = {};
-
-      return value != -1 ? true : option.message || getLocaleMsg('chosed', 'required');
+      var unchosedValue = option && option.unchosedValue || -1;
+      return resultMaker(option, 'chosed')(value != unchosedValue);
     },
 
     email: function email(value, option) {
-      if (option === false) return;
-
       if (/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(value)) {
         return true;
       } else {
-        return option.message || getLocaleMsg('email', 'invalid email');
+        return resultMaker(option, 'email')(false);
       }
     },
 
     url: function url(value, option) {
-      if (option === false) return;
-
       // contributed by Scott Gonzalez: http://projects.scottsplayground.com/iri/
       if (/^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value)) {
         return true;
       } else {
-        return option.message || getLocaleMsg('url', 'invalid url');
+        resultMaker(option, 'url')(false);
       }
     },
 
     date: function date(value, option) {
-      if (option === false) return;
-      return !/invalid|NaN/.test(new Date(value).toString()) ? true : option.message || getLocaleMsg('date', 'invalid date');
+      var valid = !/invalid|NaN/.test(new Date(value).toString());
+      return resultMaker(option, 'url')(valid);
     },
 
     dateISO: function dateISO(value, option) {
-      if (option === false) return;
-      return (/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(value) ? true : option.message || getLocaleMsg('dateISO', 'invalid date ( ISO ')
-      );
+      var valid = /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(value);
+      return resultMaker(option, 'dateISO');
     },
 
     number: function number(value, option) {
-      if (option === false) return;
-      return (/^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value) ? true : option.message || getLocaleMsg('number', 'invalid number')
-      );
+      var valid = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value);
+      return resultMaker(option, 'number');
     },
 
     digits: function digits(value, option) {
-      if (option === false) return;
-      return (/^\d+$/.test(value) ? true : option.message || getLocaleMsg('digits', 'invalid digits')
-      );
+      var valid = /^\d+$/.test(value);
+      return resultMaker(option, 'digits');
     },
 
     decimal: function decimal(value, option) {
-      if (typeof option === 'number') option = {
-        precision: option
-      };
-      var result = new RegExp('^[0-9,]+(\\.\\d{0,' + option.precision + '})?$').test(value);
-      return result || option.message || makeErrorMsg('decimal', 'Please enter a correct {0} decimal', option.precision);
+      if (typeof option === 'number') {
+        option = {
+          precision: option
+        };
+      }
+      var valid = new RegExp('^[0-9,]+(\\.\\d{0,' + option.precision + '})?$').test(value);
+      return resultMaker(option, 'decimal')(valid, option.precision);
     },
 
     // based on http://en.wikipedia.org/wiki/Luhn/
     creditcard: function creditcard(value, option) {
-      if (option === false) return;
+      var m = resultMaker(option, 'creditcard');
       // accept only spaces, digits and dashes
       if (/[^0-9 \-]+/.test(value)) {
-        return false;
+        return m(false);
       }
       var nCheck = 0,
           nDigit = 0,
@@ -1262,7 +1260,7 @@
       // Basing min and max length on
       // http://developer.ean.com/general_info/Valid_Credit_Card_Types
       if (value.length < 13 || value.length > 19) {
-        return false;
+        return m(false);
       }
 
       for (n = value.length - 1; n >= 0; n--) {
@@ -1277,59 +1275,68 @@
         bEven = !bEven;
       }
 
-      return nCheck % 10 === 0 ? true : option.message || getLocaleMsg('creditcard', 'invalid credit card number');
+      return m(nCheck % 10 === 0);
     },
 
     length: function length(value, option) {
-      if (typeof option === 'number') option = {
-        max: option
-      };
+      if (typeof option === 'number') {
+        option = {
+          max: option
+        };
+      }
 
       var len = option.utf8Bytes ? utf8Length(value) : value.length;
 
       if ('max' in option && 'min' in option) {
-        return len >= option.min && len <= option.max ? true : option.message || makeErrorMsg('length:between', 'should between {0} and {1} characters long', option.min, option.max);
+        return resultMaker(option, 'length:bewteen')(len >= option.min && len <= option.max, option.min, option.max);
       }
 
       if ('max' in option) {
-        return len <= option.max ? true : option.message || makeErrorMsg('length:max', 'should at least {0} characters', option.max);
+        return resultMaker(option, 'length:max')(len <= option.max, option.max);
       } else if ('min' in option) {
-        return len >= option.min ? true : option.message || makeErrorMsg('length:min', 'should no more than {0} characters', option.min);
+        return resultMaker(option, 'length:min')(len >= option.min, option.min);
       }
     },
 
     count: function count(value, option) {
-      if (typeof option === 'number') option = {
-        max: option
-      };
+      if (typeof option === 'number') {
+        option = {
+          max: option
+        };
+      }
 
       var valid = false;
       if (option.max) {
-        valid = value.length <= option.max ? true : option.message || makeErrorMsg('count:max', 'count should no more than {0}', option.max);
+        valid = value.length <= option.max;
       }
-      if (valid !== true) return valid;
+
+      if (valid !== true) return resultMaker(option, 'count:max')(false, option.max);
 
       if (option.min) {
-        return value.length >= option.min ? true : option.message || makeErrorMsg('count:min', 'count should no less than {0}', option.min);
+        return resultMaker(option, 'count:min')(value.length >= option.min, option.min);
       }
     },
 
     min: function min(value, option) {
-      if (typeof option === 'number') option = {
-        min: option
-      };
-      return value >= option.min ? true : option.message || makeErrorMsg('min', 'should less than or equal to {0}', option.min);
+      if (typeof option === 'number') {
+        option = {
+          min: option
+        };
+      }
+      return resultMaker(option, 'min')(value >= option.min, option.min);
     },
 
     max: function max(value, option) {
-      if (typeof option === 'number') option = {
-        max: option
-      };
-      return value <= option.max ? true : option.message || makeErrorMsg('max', 'should less than or equal to {0}', option.max);
+      if (typeof option === 'number') {
+        option = {
+          max: option
+        };
+      }
+      return resultMaker(option, 'max')(value <= option.max, option.max);
     },
 
     range: function range(value, option) {
-      return value >= option.min && value <= option.max ? true : option.message || makeErrorMsg('range', 'should between {0} and {1}', option.min, option.max);
+      return resultMaker(option, 'range')(value >= option.min && value <= option.max, option.min, option.max);
     },
 
     async: function async(value, option, callback, props, labels) {
@@ -1338,60 +1345,66 @@
     },
 
     greaterThan: function greaterThan(value, option) {
-      if (typeof option === 'number') option = {
-        value: option
-      };
-      return Number(value) > option.value ? true : option.message || makeErrorMsg('greaterThan', 'should greater than {0}', option.value);
+      if (typeof option === 'number') {
+        option = {
+          value: option
+        };
+      }
+      return resultMaker(option, 'greaterThan')(Number(value) > option.value, option.value);
     },
 
     lessThan: function lessThan(value, option) {
-      if (typeof option === 'number') option = {
-        value: option
-      };
-      return Number(value) < option.value ? true : option.message || makeErrorMsg('lessThan', 'should less than {0}', option.value);
+      if (typeof option === 'number') {
+        option = {
+          value: option
+        };
+      }
+      return resultMaker(option, 'lessThan')(Number(value) < option.value, option.value);
     },
 
     compare: function compare(value, option, callback, props, labels) {
+      if (typeof option === 'string') {
+        option = { operate: option };
+      }
+
       var p1 = value[0];
       var p2 = value[1];
 
-      if (!hasValue(p1)) return;
-      if (!hasValue(p2)) return;
+      if (!hasValue(p1)) return true;
+      if (!hasValue(p2)) return true;
 
-      var result = false;
-      if (!option.type) option.type = Number;
-      var Type = option.type;
-      p1 = new Type(p1);
-      p2 = new Type(p2);
+      p1 = Number(p1);
+      p2 = Number(p2);
 
-      var msg = '';
+      var valid = false;
+      var key = '';
       switch (option.operate) {
         case '>':
-          result = p1 > p2;
-          msg = getLocaleMsg('compare:greaterThan', '{0} should greater than {1}');
+          valid = p1 > p2;
+          key = 'compare:greaterThan';
           break;
         case '>=':
-          result = p1 >= p2;
-          msg = getLocaleMsg('compare:greaterThanOrEqual', '{0} should greater than or equal {1}');
+          valid = p1 >= p2;
+          key = 'compare:greaterThanOrEqual';
           break;
         case '<':
-          result = p1 < p2;
-          msg = getLocaleMsg('compare:lessThan', '{0} should less than {1}');
+          valid = p1 < p2;
+          key = 'compare:lessThan';
           break;
         case '<=':
-          result = p1 <= p2;
-          msg = getLocaleMsg('compare:lessThanOrEqual', '{0} should less than or equal {1}');
+          valid = p1 <= p2;
+          key = 'compare:lessThanOrEqual';
           break;
         case '=':
-          result = p1 == p2;
-          msg = getLocaleMsg('compare:equal', '{0} should equal {1}');
+          valid = p1 == p2;
+          key = 'compare:equal';
           break;
         case '!=':
-          result = p1 != p2;
-          msg = getLocaleMsg('compare:notEqual', '{0} should not equal {1}');
+          valid = p1 != p2;
+          key = 'compare:notEqual';
           break;
       }
-      return result ? true : option.message || util.format(msg, labels[0], labels[1]);
+      return resultMaker(option, key)(valid, labels[0], labels[1]);
     },
 
     pattern: function pattern(value, option) {
@@ -1399,13 +1412,12 @@
       if (typeof regexp === 'string') {
         regexp = new RegExp('^(?:' + regexp + ')$');
       }
-      return regexp.test(value) ? true : option.message || getLocaleMsg('pattern', 'invalid format');
+      return resultMaker(option, 'pattern')(regexp.test(value));
     },
 
     time: function time(value, option) {
-      if (option === false) return;
-      return (/^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value) ? true : option.message || getLocaleMsg('time', 'should between 00:00 and 23:59')
-      );
+      var valid = /^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value);
+      return resultMaker(option, 'time')(valid);
     }
   };
 
@@ -1417,6 +1429,7 @@
     depends: '{0}依赖{1}，请先填写{1}',
     uniq: '你输入的内容已存在，此项必须唯一',
     required: '这是必填字段',
+    'required:array': '请至少输入一项',
     chosed: '必选项',
     email: '请输入有效的电子邮件地址',
     url: '请输入有效的网址',
@@ -1447,6 +1460,40 @@
     'compare:notEqual': '{0} 不能等于 {1}'
   };
 
+  var enLocales = {
+    depends: '{0} depends {1}',
+    uniq: 'should be unique',
+    required: 'required',
+    'required:array': 'should have at least one',
+    chosed: 'required',
+    email: 'invalid email',
+    url: 'invalid url',
+    date: 'invalid date',
+    dateISO: 'invalid date ( ISO )',
+    number: 'invalid number',
+    digits: 'invalid digits',
+    decimal: 'Please enter a correct {0} decimal',
+    creditcard: 'invalid credit card number',
+    'length:bewteen': 'should between {0} and {1} characters long',
+    'length:max': 'should at least {0} characters',
+    'length:min': 'should no more than {0} characters',
+    'count:max': 'count should no more than {0}',
+    'count:min': 'count should no less than {0}',
+    min: 'should less than or equal to {0}',
+    max: 'should more than or equal to {0}',
+    range: 'should between {0} and {1}',
+    greaterThan: 'should greater than {0}',
+    lessThan: 'should less than {0}',
+    pattern: 'invalid format',
+    time: 'should between 00:00 and 23:59',
+    'compare:greaterThan': '{0} should greater than {1}',
+    'compare:greaterThanOrEqual': '{0} should greater than or equal {1}',
+    'compare:lessThan': '{0} should less than {1}',
+    'compare:lessThanOrEqual': '{0} should less than or equal {1}',
+    'compare:equal': '{0} should equal {1}',
+    'compare:notEqual': '{0} should not equal {1}'
+  };
+
   var ObjValidation = Validator;
 
   // add static member
@@ -1457,6 +1504,9 @@
   ObjValidation.addChecker(checkers);
 
   i18n.addLocale('zh', zhLocales);
+
+  i18n.addLocale('en', enLocales);
+
   i18n.setCurrLocale('en');
 
   return ObjValidation;
