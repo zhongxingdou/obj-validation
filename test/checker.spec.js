@@ -67,7 +67,7 @@ describe('checkers', function() {
 
   it('required', function() {
     var user = {
-      name: ''
+      name: '',
     }
     v.setTarget(user)
 
@@ -77,6 +77,20 @@ describe('checkers', function() {
 
     user.name = 'hal2'
     assert(v.validate() === true)
+  })
+
+  it('required for number', function() {
+    var user = {
+      age: 18
+    }
+    v.setTarget(user)
+
+    v.addRule('age', 'required')
+
+    assert(v.validate() === true)
+
+    user.age = null
+    assert(v.validate() === false)
   })
 
   it('required for Array', function() {
