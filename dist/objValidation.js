@@ -1187,7 +1187,11 @@
         return m2(value && value.length > 0);
       }
 
-      return m(value.trim().length > 0);
+      if (typeof value === 'string') {
+        return m(value.length > 0);
+      }
+
+      return true;
     },
 
     chosed: function chosed(value, option) {
