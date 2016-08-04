@@ -12,7 +12,7 @@ export default {
   digits: 'invalid digits',
   decimal: 'Please enter a correct {0} decimal',
   creditcard: 'invalid credit card number',
-  'length:bewteen': 'should between {0} and {1} characters long',
+  'length:between': 'should between {0} and {1} characters long',
   'length:max': 'should at least {0} characters',
   'length:min': 'should no more than {0} characters',
   'count:max': 'count should no more than {0}',
