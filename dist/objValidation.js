@@ -1292,7 +1292,7 @@
       var len = option.utf8Bytes ? utf8Length(value) : value.length;
 
       if ('max' in option && 'min' in option) {
-        return resultMaker(option, 'length:bewteen')(len >= option.min && len <= option.max, option.min, option.max);
+        return resultMaker(option, 'length:between')(len >= option.min && len <= option.max, option.min, option.max);
       }
 
       if ('max' in option) {
