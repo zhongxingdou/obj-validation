@@ -249,6 +249,7 @@ export default {
     if (typeof option === 'string') {
       option = {operate: option}
     }
+    if (!option) option = {}
 
     var p1 = value[0]
     var p2 = value[1]
@@ -256,8 +257,9 @@ export default {
     if (!hasValue(p1)) return true
     if (!hasValue(p2)) return true
 
-    p1 = Number(p1)
-    p2 = Number(p2)
+    var Type = option.type || Number
+    p1 = new Type(p1)
+    p2 = new Type(p2)
 
     var valid = false
     var key = ''
