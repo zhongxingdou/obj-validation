@@ -28,7 +28,7 @@ function Validator(rules, obj, propLabels) {
   this._validatedObservers = []
   this._resetObservers = []
   this.defaultParamOfRule = {}
-  this.rules = rules || {}
+  this.rules = {}
 
   var myCheckers = {}
   var checkers = __checkers
