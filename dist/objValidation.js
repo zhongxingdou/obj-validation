@@ -477,6 +477,24 @@ var proto = {
     var len = propExps.length;
     if (!len) return;
 
+    // clear related prop error
+    propExps.forEach(function (exp) {
+      var props = self._parseGroupProps(exp);
+      if (props.length > 1 && props[0] !== prop) {
+        (function () {
+          var rules = Object.keys(self.rules[exp]);
+          props.forEach(function (p) {
+            if (p !== prop) {
+              // except self
+              rules.forEach(function (r) {
+                return self._clearErrorsFor(p, r);
+              });
+            }
+          });
+        })();
+      }
+    });
+
     if (len === 1) {
       return this._validatePropExp(propExps[0], callback, option);
     }
@@ -1286,6 +1304,12 @@ var vueMixin = {
         validator.validate(prop, function (isValid) {
           vm.validateState[prop] = isValid;
           vm.validateError[prop] = validator.getErrors(prop).join('\n');
+
+          var rProps = validator.getRelatedProps(prop);
+          rProps.forEach(function (rprop) {
+            vm.$set('validateError.' + rprop, validator.getErrors(rprop).join('\n'));
+            vm.$set('validateState.' + rprop, validator.isPropValid(rprop));
+          });
         });
       });
 

@@ -1,6 +1,6 @@
 {
   "name": "obj-validation",
-  "version": "2.5.6",
+  "version": "2.5.7",
   "description": "javascript object validation",
   "main": "dist/objValidation.js",
   "directories": {
