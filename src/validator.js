@@ -406,6 +406,19 @@ var proto = {
     var len = propExps.length
     if (!len) return
 
+    // clear related prop error
+    propExps.forEach(exp => {
+      let props = self._parseGroupProps(exp)
+      if (props.length > 1 && props[0] !== prop) {
+        let rules = Object.keys(self.rules[exp])
+        props.forEach(p => {
+          if (p !== prop) { // except self
+            rules.forEach(r => self._clearErrorsFor(p, r))
+          }
+        })
+      }
+    })
+
     if (len === 1) {
       return this._validatePropExp(propExps[0], callback, option)
     }

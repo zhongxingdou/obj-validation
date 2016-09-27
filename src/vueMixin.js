@@ -41,6 +41,13 @@ export default {
         validator.validate(prop, function (isValid) {
           vm.validateState[prop] = isValid
           vm.validateError[prop] = validator.getErrors(prop).join('\n')
+
+          // reset related props state
+          let rProps= validator.getRelatedProps(prop)
+          rProps.forEach(function (rprop) {
+            vm.$set('validateError.' + rprop, validator.getErrors(rprop).join('\n'))
+            vm.$set('validateState.' + rprop, validator.isPropValid(rprop))
+          })
         })
       })
 
