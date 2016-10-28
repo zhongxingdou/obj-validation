@@ -249,10 +249,10 @@ var proto = {
   },
 
   _getAllErrors: function _getAllErrors() {
-    var result = [];
+    var result = {};
     var errors = this.validateErrors;
     for (var p in errors) {
-      result = result.concat(this.getErrors(p));
+      result[p] = this.getErrors(p).join('\n');
     }
     return result;
   },
@@ -1266,7 +1266,6 @@ var checkers = {
 var vueMixin = {
   data: function data() {
     return {
-      validateState: {},
       validateError: {}
     };
   },
@@ -1276,6 +1275,7 @@ var vueMixin = {
     if (!option) return;
 
     var target = option.target;
+    var lastTarget = {};
     var vmTarget = vm.$get(target);
     var labels = option.labels;
     var validator = option.validator;
@@ -1291,57 +1291,38 @@ var vueMixin = {
     }
 
     vm.$validator = validator;
-
     // set target
-    vm.$watch(target, function (val) {
-      validator.setTarget(val, labels);
-    });
-    validator.setTarget(vmTarget, labels);
+    vm.$watch(target, function (val, oldVal) {
+      if (val !== oldVal) {
+        validator.setTarget(val, labels);
+      }
 
-    // do validate when any property of target changed
-    function validateProp(watchExp, prop) {
-      vm.$watch(watchExp, function () {
-        validator.validate(prop, function (isValid) {
-          vm.validateState[prop] = isValid;
-          vm.validateError[prop] = validator.getErrors(prop).join('\n');
+      Object.keys(val).forEach(function (prop) {
+        if (val[prop] !== lastTarget[prop]) {
+          lastTarget[prop] = val[prop];
+          validator.validate(prop, function (isValid) {
+            vm.$set('validateError.' + prop, validator.getErrors(prop).join('\n'));
 
-          var rProps = validator.getRelatedProps(prop);
-          rProps.forEach(function (rprop) {
-            vm.$set('validateError.' + rprop, validator.getErrors(rprop).join('\n'));
-            vm.$set('validateState.' + rprop, validator.isPropValid(rprop));
+            // reset related props state
+            var rProps = validator.getRelatedProps(prop);
+            rProps.forEach(function (rprop) {
+              vm.$set('validateError.' + rprop, validator.getErrors(rprop).join('\n'));
+            });
           });
-        });
+        }
       });
+    }, { deep: true });
 
-      vm.$set('validateState.' + prop, true);
-      vm.$set('validateError.' + prop, '');
-    }
-
-    var props = option.targetProps || Object.keys(vmTarget);
-    props.forEach(function (prop) {
-      validateProp(target + '.' + prop, prop);
-    });
-
+    validator.setTarget(vmTarget, labels);
     // handle validator reset
     var onReset = function onReset() {
-      var state = vm.validateState;
-      for (var p in state) {
-        state[p] = true;
-      }
-
-      var error = vm.validateError;
-      for (var _p in error) {
-        error[_p] = '';
-      }
+      vm.validateError = {};
     };
     vm._onValidatorReset = onReset;
     validator.on('reset', onReset);
     validator.on('validated', function (isValid) {
       if (!isValid) {
-        props.forEach(function (prop) {
-          vm.$set('validateError.' + prop, validator.getErrors(prop).join('\n'));
-          vm.$set('validateState.' + prop, validator.isPropValid(prop));
-        });
+        vm.validateError = validator.getErrors();
       }
     });
   },
