@@ -178,10 +178,10 @@ var proto = {
   },
 
   _getAllErrors: function() {
-    var result = []
+    var result = {}
     var errors = this.validateErrors
     for (var p in errors) {
-      result = result.concat(this.getErrors(p))
+      result[p] = this.getErrors(p).join('\n')
     }
     return result
   },
