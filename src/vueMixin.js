@@ -13,7 +13,6 @@ export default {
     if (!option) return
 
     let target = option.target
-    let lastTarget = {}
     let vmTarget = vm.$get(target)
     let labels = option.labels
     let validator = option.validator
@@ -33,32 +32,32 @@ export default {
 
     // validate prop when changed
     vm.$watch(target, function (val, oldVal) {
-      if (val !== oldVal) {
         validator.setTarget(val, labels)
-      }
+    })
 
-      Object.keys(val).forEach((prop) => {
-        if(val[prop] !== lastTarget[prop]) {
-          lastTarget[prop] = val[prop]
-          validator.validate(prop, function (isValid) {
-            vm.$set('validateError.' + prop, validator.getErrors(prop).join('\n'))
+    function validateProp (watchExp, prop) {
+      vm.$watch(watchExp, function () {
+        validator.validate(prop, function (isValid) {
+          vm.$set('validateError.' + prop, validator.getErrors(prop).join('\n'))
 
-            // reset related props state
-            let rProps= validator.getRelatedProps(prop)
-            rProps.forEach(function (rprop) {
-              vm.$set('validateError.' + rprop, validator.getErrors(rprop).join('\n'))
-            })
+          // reset related props state
+          let rProps= validator.getRelatedProps(prop)
+          rProps.forEach(function (rprop) {
+            vm.$set('validateError.' + rprop, validator.getErrors(rprop).join('\n'))
           })
-        }
+        }, {deep: true})
       })
-    }, {deep: true})
+    }
+
+    let props = option.targetProps || Object.keys(vmTarget)
+    props.forEach(function (prop) {
+      validateProp(target + '.' + prop, prop)
+    })
 
     // handle validator reset
-    let onReset = function () {
+    validator.on('reset', function () {
       vm.validateError = {}
-    }
-    vm._onValidatorReset = onReset
-    validator.on('reset', onReset)
+    })
 
     validator.on('validated', function (isValid) {
       if (!isValid) {
