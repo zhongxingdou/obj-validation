@@ -1269,13 +1269,13 @@ var vueMixin = {
       validateError: {}
     };
   },
+
   created: function created() {
     var vm = this;
     var option = this.$options.validate;
     if (!option) return;
 
     var target = option.target;
-    var lastTarget = {};
     var vmTarget = vm.$get(target);
     var labels = option.labels;
     var validator = option.validator;
@@ -1291,41 +1291,44 @@ var vueMixin = {
     }
 
     vm.$validator = validator;
-    // set target
-    vm.$watch(target, function (val, oldVal) {
-      if (val !== oldVal) {
-        validator.setTarget(val, labels);
-      }
-
-      Object.keys(val).forEach(function (prop) {
-        if (val[prop] !== lastTarget[prop]) {
-          lastTarget[prop] = val[prop];
-          validator.validate(prop, function (isValid) {
-            vm.$set('validateError.' + prop, validator.getErrors(prop).join('\n'));
-
-            // reset related props state
-            var rProps = validator.getRelatedProps(prop);
-            rProps.forEach(function (rprop) {
-              vm.$set('validateError.' + rprop, validator.getErrors(rprop).join('\n'));
-            });
-          });
-        }
-      });
-    }, { deep: true });
-
     validator.setTarget(vmTarget, labels);
+
+    // validate prop when changed
+    vm.$watch(target, function (val, oldVal) {
+      validator.setTarget(val, labels);
+    });
+
+    function validateProp(watchExp, prop) {
+      vm.$watch(watchExp, function () {
+        validator.validate(prop, function (isValid) {
+          vm.$set('validateError.' + prop, validator.getErrors(prop).join('\n'));
+
+          // reset related props state
+          var rProps = validator.getRelatedProps(prop);
+          rProps.forEach(function (rprop) {
+            vm.$set('validateError.' + rprop, validator.getErrors(rprop).join('\n'));
+          });
+        }, { deep: true });
+      });
+    }
+
+    var props = option.targetProps || Object.keys(vmTarget);
+    props.forEach(function (prop) {
+      validateProp(target + '.' + prop, prop);
+    });
+
     // handle validator reset
-    var onReset = function onReset() {
+    validator.on('reset', function () {
       vm.validateError = {};
-    };
-    vm._onValidatorReset = onReset;
-    validator.on('reset', onReset);
+    });
+
     validator.on('validated', function (isValid) {
       if (!isValid) {
         vm.validateError = validator.getErrors();
       }
     });
   },
+
   beforeDestory: function beforeDestory() {
     if (!this.$validator) return;
     this.$validator.off('reset', this._onValidatorReset);
