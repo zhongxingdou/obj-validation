@@ -103,17 +103,17 @@ export default {
 
   dateISO: function(value, option) {
     var valid = /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(value)
-    return resultMaker(option, 'dateISO')
+    return resultMaker(option, 'dateISO')(valid)
   },
 
   number: function(value, option) {
     var valid = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value)
-    return resultMaker(option, 'number')
+    return resultMaker(option, 'number')(valid)
   },
 
   digits: function(value, option) {
     var valid = /^\d+$/.test(value)
-    return resultMaker(option, 'digits')
+    return resultMaker(option, 'digits')(valid)
   },
 
   decimal: function(value, option) {
