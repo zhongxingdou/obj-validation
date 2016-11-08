@@ -1059,17 +1059,17 @@ var checkers = {
 
   dateISO: function dateISO(value, option) {
     var valid = /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(value);
-    return resultMaker(option, 'dateISO');
+    return resultMaker(option, 'dateISO')(valid);
   },
 
   number: function number(value, option) {
     var valid = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value);
-    return resultMaker(option, 'number');
+    return resultMaker(option, 'number')(valid);
   },
 
   digits: function digits(value, option) {
     var valid = /^\d+$/.test(value);
-    return resultMaker(option, 'digits');
+    return resultMaker(option, 'digits')(valid);
   },
 
   decimal: function decimal(value, option) {
@@ -1351,7 +1351,7 @@ var zhLocales = {
   date: '请输入有效的日期',
   dateISO: '请输入有效的日期 (YYYY-MM-DD)',
   number: '请输入有效的数字',
-  digits: '只能输入数字',
+  digits: '请输入正整数',
   creditcard: '请输入有效的信用卡号码',
   equalTo: '你的输入不相同',
   'length:max': '最多可以输入 {0} 个字符',
